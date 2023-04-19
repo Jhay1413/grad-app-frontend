@@ -8,7 +8,7 @@ import { deleteSpecificResearch } from '../../../../api/research';
 
 
 
-const ResearchPage = () => {
+const ResearchPage = ({loading,setLoading}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [listResearch,setResearch] = useState([]);
     const [updateData,setUpdateData] = useState();
@@ -87,7 +87,7 @@ const ResearchPage = () => {
       async function getAllResearch() {
         try {
         
-          const data = await getResearch();
+          const {status,data} = await getResearch();
           setResearch(data);
          
         } catch (error) {
