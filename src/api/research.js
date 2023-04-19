@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const Research_API = 'http://localhost:3001/research';
+const Research_API = process.env.REACT_APP_RESEARCH_API;
 
 export const getResearch = async () => {
     try {
