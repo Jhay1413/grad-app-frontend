@@ -8,7 +8,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-      <Link to="/admin">Click to admin</Link>
+     
         <Routes>
           <Route exact path='/admin/*' Component={AdminLayout}></Route>
         </Routes>

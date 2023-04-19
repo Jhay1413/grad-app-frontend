@@ -52,8 +52,10 @@ const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChan
         const response = await UpdateResearch(updateData._id,formValues);
         console.log(response)
         setDataChange(!dataChange);
+
       } catch (error) {
       }
+      handleCancel();
         
     }
     else{
@@ -61,6 +63,7 @@ const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChan
         const response = await addResearch(formValues);
         console.log(response)
         setDataChange(!dataChange);
+        handleCancel();
       
       } catch (error) {
         
