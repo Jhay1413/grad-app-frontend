@@ -5,8 +5,7 @@ import { useEffect, useState } from 'react';
 import AddResearch from '../../admin-modals/addData';
 import { getResearch } from '../../../../api/research';
 import { deleteSpecificResearch } from '../../../../api/research';       
-import { Spin } from 'antd';
-import LoadingComponent from '../../../common/loading/loading';
+
 
 
 const ResearchPage = ({loading,setLoading}) => {
@@ -94,6 +93,7 @@ const ResearchPage = ({loading,setLoading}) => {
         try {
         
           const {status,data} = await getResearch();
+          console.log(status);
           setResearch(data);
          
         } catch (error) {
