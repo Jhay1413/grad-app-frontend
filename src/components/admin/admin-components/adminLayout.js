@@ -1,12 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import AdminSidebar from './sidebar';
 import {MenuFoldOutlined,MenuUnfoldOutlined} from '@ant-design/icons';
 import { useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {Route, Routes } from 'react-router-dom';
 import AdminIndex from '../admin-pages';
 import ResearchPage from '../admin-pages/research/research';
-import {Spin} from 'antd';
+
 import LoadingComponent from '../../common/loading/loading';
 const AdminLayout = () => {
     const [showSidebar,setShowSideBar] = useState(true);

@@ -1,4 +1,4 @@
-import {Modal ,Button
+import {Modal
   } from 'antd';
   import { useState,useRef, useEffect } from 'react';
   import { addResearch,UpdateResearch } from '../../../api/research';
@@ -50,7 +50,7 @@ const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChan
     if(updateData){
       try {
         const response = await UpdateResearch(updateData._id,formValues);
-       
+        console.log(response)
         setDataChange(!dataChange);
       } catch (error) {
       }
@@ -59,6 +59,7 @@ const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChan
     else{
       try {
         const response = await addResearch(formValues);
+        console.log(response)
         setDataChange(!dataChange);
       
       } catch (error) {

@@ -5,11 +5,10 @@ import { useEffect, useState } from 'react';
 import AddResearch from '../../admin-modals/addData';
 import { getResearch } from '../../../../api/research';
 import { deleteSpecificResearch } from '../../../../api/research';       
-import { Spin } from 'antd';
-import LoadingComponent from '../../../common/loading/loading';
 
 
-const ResearchPage = ({loading,setLoading}) => {
+
+const ResearchPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [listResearch,setResearch] = useState([]);
     const [updateData,setUpdateData] = useState();
@@ -88,7 +87,7 @@ const ResearchPage = ({loading,setLoading}) => {
       async function getAllResearch() {
         try {
         
-          const {status,data} = await getResearch();
+          const data = await getResearch();
           setResearch(data);
          
         } catch (error) {

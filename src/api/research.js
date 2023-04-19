@@ -5,8 +5,7 @@ const Research_API = process.env.REACT_APP_RESEARCH_API;
 export const getResearch = async () => {
     try {
       const response = await axios.get(`${Research_API}/getResearch`);
-      console.log('asdasd');
-  
+     
       return {
         status: response.status,
         data: response.data
