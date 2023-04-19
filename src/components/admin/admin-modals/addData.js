@@ -3,7 +3,7 @@ import {Modal
   import { useState,useRef, useEffect } from 'react';
   import { addResearch,UpdateResearch } from '../../../api/research';
 
-const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChange,setDataChange}) => {
+const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChange,setDataChange,loadingState}) => {
    
   const formRef = useRef(null);
   const [formValues, setFormValues] = useState({
@@ -130,7 +130,7 @@ const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChan
                     </label>
                     <label className='col-span-4'>
                       Research Abstract
-                      <input type="text" className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="Abstract" value={formValues.Abstract} onChange={handleInputChange} />
+                      <textarea className="appearance-none  w-full h-20 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="Abstract" value={formValues.Abstract} onChange={handleInputChange} />
                     </label>
                     <label className='col-span-4 row-span-2'>
                       Remarks

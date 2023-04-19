@@ -14,6 +14,10 @@ const ResearchPage = ({loading,setLoading}) => {
     const [listResearch,setResearch] = useState([]);
     const [updateData,setUpdateData] = useState();
     const [dataChange,setDataChange] = useState(false);
+
+    const paginationConfig = {
+      pageSize: 10, // Set the number of records per page to 10
+    };
     const columns = [
       {
         title: 'Research Title',
@@ -24,6 +28,7 @@ const ResearchPage = ({loading,setLoading}) => {
         title: 'Abstract',
         dataIndex: 'Abstract',
         key: 'Abstract',
+        className: 'wrapText'
       },
       {
         title: 'Proponents',
@@ -41,9 +46,9 @@ const ResearchPage = ({loading,setLoading}) => {
         key: 'FundSource',
       },
       {
-        title: 'No of patents',
-        dataIndex: 'NoOfPatents',
-        key: 'NoOfPatents',
+        title: 'patents',
+        dataIndex: 'Patents',
+        key: 'Patents',
       },
       {
         title: 'No. Of Utility Models',
@@ -120,22 +125,18 @@ const ResearchPage = ({loading,setLoading}) => {
     const addButtonClick = () =>{
       setIsModalOpen(true);
     }
-  
+    const loadingState = () =>{
+      setLoading(!loading);
+    }
     return ( 
         <>
-
-         
-              <div className='min-w-11/12 bg-white mx-auto'>
-                  <div className='flex flex-col p-5'>
-                    <button className='flex p-5' onClick={addButtonClick}><FormOutlined style={{ fontSize: '30px', color: '#08c' }}/></button>
-                    <Table columns={columns}  dataSource = {listResearch.map(research=>({...research,key:research._id}))} scroll={{ x: 'max-content',}}/>
-                    
-                      <AddResearch isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} handleCancel={handleCancel} updateData={updateData} setUpdatedata={setUpdateData} dataChange = {dataChange} setDataChange={setDataChange}/>
-                  
-                  </div>
-              </div>
-           
-              
+          <div className='min-w-11/12 bg-white mx-auto'>
+            <div className='flex flex-col p-5'>
+              <button className='flex p-5' onClick={addButtonClick}><FormOutlined style={{ fontSize: '30px', color: '#08c' }}/></button>
+                <Table columns={columns}  dataSource = {listResearch.map(research=>({...research,key:research._id}))} scroll={{ x: 'max-content',}} pagination={paginationConfig}/>
+                <AddResearch isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} handleCancel={handleCancel} updateData={updateData} setUpdatedata={setUpdateData} dataChange = {dataChange} setDataChange={setDataChange} loadingState={loadingState}/>
+            </div>
+          </div>
         </>
      );
 }
