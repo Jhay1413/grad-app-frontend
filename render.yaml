@@ -1,10 +1,4 @@
-services:
-  - type: web
-    name: grad-app
-    env: static
-    buildCommand: npm run build
-    staticPublishPath: ./build
-    routes:
-      - src: /.*
-        dest: /index.html
-        action: rewrite
+routes:
+  - type: rewrite
+    source: "/*"
+    destination: "/index.html"
