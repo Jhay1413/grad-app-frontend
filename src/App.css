@@ -5,7 +5,10 @@
 .wrapText {
   @apply whitespace-normal break-words max-w-lg; /* You can use max-w-md, max-w-xl, etc., to set the desired maximum width */
 }
-
+.scrollable-column {
+  max-height: 100px; 
+  overflow-y: auto;
+}
 .App {
   text-align: center;
 }

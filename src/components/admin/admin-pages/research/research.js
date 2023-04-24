@@ -15,7 +15,7 @@ const ResearchPage = ({loading,setLoading}) => {
     const [dataChange,setDataChange] = useState(false);
 
     const paginationConfig = {
-      pageSize: 10, // Set the number of records per page to 10
+      pageSize: 5, // Set the number of records per page to 10
     };
     const columns = [
       {
