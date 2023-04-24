@@ -25,12 +25,6 @@ const ResearchPage = ({loading,setLoading}) => {
         className: 'wrapText'
       },
       {
-        title: 'Abstract',
-        dataIndex: 'Abstract',
-        key: 'Abstract',
-        className: 'wrapText'
-      },
-      {
         title: 'Proponents',
         dataIndex: 'Proponents',
         key: 'Proponents',
@@ -65,6 +59,13 @@ const ResearchPage = ({loading,setLoading}) => {
         dataIndex: 'Remarks',
         key: 'Remarks',
       },
+      {
+        title: 'Abstract',
+        dataIndex: 'Abstract',
+        key: 'Abstract',
+        className: 'wrapText'
+      },
+      
       {
         title: 'CreatedAt',
         dataIndex: 'createdAt',
