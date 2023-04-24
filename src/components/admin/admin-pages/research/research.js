@@ -22,6 +22,7 @@ const ResearchPage = ({loading,setLoading}) => {
         title: 'Research Title',
         dataIndex: 'ResearchName',
         key: 'ResearchName',
+        className: 'wrapText'
       },
       {
         title: 'Abstract',
