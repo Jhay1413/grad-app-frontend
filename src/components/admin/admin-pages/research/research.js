@@ -55,6 +55,11 @@ const ResearchPage = ({loading,setLoading}) => {
         key: 'Cite',
       },
       {
+        title: 'Acceptance Date',
+        dataIndex: 'AcceptanceDate',
+        key: 'AcceptanceDate',
+      },
+      {
         title: 'Remarks',
         dataIndex: 'Remarks',
         key: 'Remarks',

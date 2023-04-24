@@ -14,6 +14,7 @@ const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChan
     FundSource: '',
     NoOfPatents: '',
     Cite: '',
+    AcceptanceDate:'',
     NoOfUtilModel: '',
     Remarks: '',
   });
@@ -28,6 +29,7 @@ const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChan
         FundSource: updateData.FundSource|| '',
         NoOfPatents: updateData.NoOfPatents|| '',
         Cite: updateData.Cite|| '',
+        AcceptanceDate:updateData.AcceptanceDate || '',
         NoOfUtilModel: updateData.NoOfUtilModel|| '',
         Remarks: updateData.Remarks || '',
       })
@@ -48,6 +50,7 @@ const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChan
     
    
     if(updateData){
+
       try {
         const response = await UpdateResearch(updateData._id,formValues);
         console.log(response)
@@ -89,6 +92,7 @@ const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChan
     FundSource: '',
     NoOfPatents: '',
     Cite: '',
+    AcceptanceDate: '',
     NoOfUtilModel: '',
     Remarks: '',
     });
@@ -127,6 +131,10 @@ const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChan
                     <label className='col-span-4'>
                       How to Cite 
                       <input type="text" className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="Cite" value={formValues.Cite} onChange={handleInputChange} />
+                    </label>
+                    <label className='col-span-4'>
+                      Date
+                      <input type="date" className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="AcceptanceDate" value={formValues.AcceptanceDate} onChange={handleInputChange} />
                     </label>
                     <label className='col-span-4'>
                       Research Abstract
