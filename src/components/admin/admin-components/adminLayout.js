@@ -9,7 +9,7 @@ import ResearchPage from '../admin-pages/research/research';
 
 import LoadingComponent from '../../common/loading/loading';
 const AdminLayout = () => {
-    const [showSidebar,setShowSideBar] = useState(false);
+    const [showSidebar,setShowSideBar] = useState(true);
     const [loading,setLoading] = useState(false);
     return (
       <>

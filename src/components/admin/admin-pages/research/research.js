@@ -1,5 +1,5 @@
 
-import { Space, Table,Button } from 'antd';
+import { Space, Table,Button ,Popover} from 'antd';
 import { FormOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import AddResearch from '../../admin-modals/addData';
@@ -13,6 +13,7 @@ const ResearchPage = ({loading,setLoading}) => {
     const [listResearch,setResearch] = useState([]);
     const [updateData,setUpdateData] = useState();
     const [dataChange,setDataChange] = useState(false);
+   
 
     const paginationConfig = {
       pageSize: 3, // Set the number of records per page to 10
@@ -68,7 +69,16 @@ const ResearchPage = ({loading,setLoading}) => {
         title: 'Abstract',
         dataIndex: 'Abstract',
         key: 'Abstract',
-        className: 'wrapText'
+        className: 'wrapText',
+        render: (text) => {
+          const truncatedText = text.slice(0, 100) + (text.length > 100 ? '...' : '');
+          return (
+            <Popover content={<p>{text}</p>} title="Abstract" trigger="click">
+              <span style={{ cursor: 'pointer' }}>{truncatedText}</span>
+            </Popover>
+          );
+        },
+    
       },
       
       {
@@ -140,7 +150,7 @@ const ResearchPage = ({loading,setLoading}) => {
           <div className='min-w-11/12 bg-white mx-auto'>
             <div className='flex flex-col p-5'>
               <button className='flex p-5' onClick={addButtonClick}><FormOutlined style={{ fontSize: '30px', color: '#08c' }}/></button>
-                <Table columns={columns}  dataSource = {listResearch.map(research=>({...research,key:research._id}))} scroll={{ x: 'max-content',}} pagination={paginationConfig}/>
+                <Table columns={columns}   dataSource = {listResearch.map(research=>({...research,key:research._id}))} scroll={{ x: 'max-content',}} pagination={paginationConfig}/>
                 <AddResearch isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} handleCancel={handleCancel} updateData={updateData} setUpdatedata={setUpdateData} dataChange = {dataChange} setDataChange={setDataChange} loadingState={loadingState}/>
             </div>
           </div>
