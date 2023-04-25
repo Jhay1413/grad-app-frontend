@@ -14,7 +14,7 @@ const AdminLayout = () => {
     return (
       <>
         <div className="flex min-h-screen">
-        <div className={`bg-gray-900 text-white transition-all  ${showSidebar ? 'w-72' : 'w-20'}`}>
+        <div className={`bg-gray-900 text-white transition-all  ${showSidebar ? 'w-72' : 'w-0'}`}>
             <AdminSidebar showSidebar = {showSidebar}/> 
         </div>
         <div className="flex flex-col w-full">
@@ -28,7 +28,7 @@ const AdminLayout = () => {
                 <LoadingComponent/>
               
             ):(
-           
+             
             <Routes>
                 <Route  path="/" element={<AdminIndex/>} />
                 <Route  path="/research"  element={<ResearchPage loading={loading} setLoading={setLoading}/>} />
