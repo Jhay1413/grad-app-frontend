@@ -4,9 +4,10 @@ import {Modal
   import { addResearch,UpdateResearch } from '../../../api/research';
 import LoadingComponent from '../../common/loading/loading';
 
-const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChange,setDataChange}) => {
+const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataChange,setDataChange}) => {
   const [loading,setLoading] = useState(false);
   const formRef = useRef(null);
+
   const [formValues, setFormValues] = useState({
     ResearchName: '',
     Beneficiaries: '',
@@ -48,10 +49,7 @@ const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChan
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
-   
     if(updateData){
-
       try {
         setLoading(true);
         const response = await UpdateResearch(updateData._id,formValues);
@@ -59,9 +57,10 @@ const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChan
         setDataChange(!dataChange);
 
       } catch (error) {
+        console.log(error);
       }
       setLoading(false);
-      handleCancel();
+      setIsModalOpen(!isModalOpen);
         
     }
     else{
@@ -69,20 +68,20 @@ const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChan
         const response = await addResearch(formValues);
         console.log(response)
         setDataChange(!dataChange);
-        handleCancel();
+        setIsModalOpen(!isModalOpen);
       
       } catch (error) {
-        
+        console.log(error);
       }
     }
     resetForm();
    
      // do something with the form data object
   };
-  const cancleUpdate =() =>{
+  const cancelUpdate = () =>{
     setUpdatedata('');
     resetForm();
-    handleCancel();
+    setIsModalOpen(!isModalOpen);
   }
 
   const resetForm = () =>{
@@ -103,7 +102,7 @@ const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChan
   
     return ( 
         <>
-          <Modal title="Research Form" open = {isModalOpen} onCancel={cancleUpdate} footer={null}>
+          <Modal title="Research Form" open = {isModalOpen} onCancel={cancelUpdate} footer={null}>
             <div className="relative flex items-center">
               {loading && (
                 <div className="absolute inset-0 flex items-center justify-center z-10 bg-opacity-50 bg-gray-300">

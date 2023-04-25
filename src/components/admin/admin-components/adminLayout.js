@@ -1,5 +1,4 @@
 import React from 'react';
-
 import AdminSidebar from './sidebar';
 import {MenuFoldOutlined,MenuUnfoldOutlined} from '@ant-design/icons';
 import { useState } from 'react';
@@ -7,7 +6,6 @@ import {Route, Routes } from 'react-router-dom';
 import AdminIndex from '../admin-pages';
 import ResearchPage from '../admin-pages/research/research';
 
-import LoadingComponent from '../../common/loading/loading';
 const AdminLayout = () => {
     const [showSidebar,setShowSideBar] = useState(true);
     const [loading,setLoading] = useState(false);
@@ -23,7 +21,7 @@ const AdminLayout = () => {
               <span>{showSidebar ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}</span>
             </button>
           </div>
-          <div className="p-4 flex-grow bg-gray-200">
+          <div className="p-4 flex-grow bg-gray-200 w-full relative">
             <Routes>
                 <Route  path="/" element={<AdminIndex/>} />
                 <Route  path="/research"  element={<ResearchPage loading={loading} setLoading={setLoading}/>} />

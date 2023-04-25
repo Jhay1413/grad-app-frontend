@@ -8,7 +8,7 @@ import { deleteSpecificResearch } from '../../../../api/research';
 
 
 
-const ResearchPage = ({loading,setLoading}) => {
+const ResearchPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [listResearch,setResearch] = useState([]);
     const [tempResData,setTempResData] = useState('');
@@ -16,7 +16,6 @@ const ResearchPage = ({loading,setLoading}) => {
     const [dataChange,setDataChange] = useState(false);
     const [expandedKey, setExpandedKey] = useState(null);
 
-  
     useEffect(()=>{
       async function getAllResearch() {
         try {
@@ -24,8 +23,6 @@ const ResearchPage = ({loading,setLoading}) => {
           const {status,data} = await getResearch();
           console.log(status);
           setResearch(data);
-        
-       
         } catch (error) {
           console.error('Error fetching research:', error);
           
@@ -33,8 +30,6 @@ const ResearchPage = ({loading,setLoading}) => {
     }
       getAllResearch();
     }, [dataChange]);
-
-  
 
     const paginationConfig = {
       pageSize: 10, // Set the number of records per page to 10
@@ -131,12 +126,6 @@ const ResearchPage = ({loading,setLoading}) => {
         )
       }
     ];
-
-    const handleCancel = ()=>{
-    
-      setIsModalOpen(false);
-     
-    }
     const handleEdit = (record) => {
       setUpdateData(record);
       setIsModalOpen(true);
@@ -150,23 +139,14 @@ const ResearchPage = ({loading,setLoading}) => {
       }
       console.log('Deleted Successfully',response);
     };
-    const addButtonClick = () =>{
-      setIsModalOpen(true);
-    }
-    const loadingState = () =>{
-      setLoading(!loading);
-    }
-    const dataSource = () =>{
 
-    }
     return ( 
         <>
-          <div className='max-w-7xl bg-white mx-auto'>
+          <div className='max-w-screen-2xl bg-white mx-auto'>
             <div className='flex flex-col p-5'>
-             
-                <button className='flex p-5' onClick={addButtonClick}><FormOutlined style={{ fontSize: '30px', color: '#08c' }}/></button>
-                <Table className = ' ' columns={columns}  dataSource = {listResearch.map(research=>({...research,key:research._id}))} scroll={{ x: 'max-content',}} pagination={paginationConfig}/>
-                <AddResearch isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} handleCancel={handleCancel} updateData={updateData} setUpdatedata={setUpdateData} dataChange = {dataChange} setDataChange={setDataChange} loadingState={loadingState}/>
+                <button className='flex p-5' onClick={()=>setIsModalOpen(!isModalOpen)}><FormOutlined style={{ fontSize: '30px', color: '#08c' }}/></button>
+                <Table  columns={columns}  dataSource = {listResearch.map(research=>({...research,key:research._id}))} scroll={{ x: 'max-content',}} pagination={paginationConfig}/>
+                <AddResearch isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} updateData={updateData} setUpdatedata={setUpdateData} dataChange = {dataChange} setDataChange={setDataChange}/>
             </div>
           </div>
         </>
