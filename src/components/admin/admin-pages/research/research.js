@@ -68,6 +68,27 @@ const ResearchPage = () => {
         key: 'Beneficiaries',
       },
       {
+        title: 'Abstract',
+        dataIndex: 'Abstract',
+        key: 'Abstract',
+        className: 'wrapText',
+        
+        render: (text, record) => {
+          const truncatedText = text.slice(0, 100) + (text.length > 100 ? '...' : '');
+          const displayText = expandedKey === record.key ? text : truncatedText;
+          
+          return (
+            <span
+              
+              style={{ cursor: 'pointer' }}
+              onClick={() => setExpandedKey(expandedKey === record.key ? null : record.key)}
+            >
+              {displayText}
+            </span>
+          );
+        },
+      },
+      {
         title: 'fund source',
         dataIndex: 'FundSource',
         key: 'FundSource',
@@ -96,27 +117,6 @@ const ResearchPage = () => {
         title: 'Remarks',
         dataIndex: 'Remarks',
         key: 'Remarks',
-      },
-      {
-        title: 'Abstract',
-        dataIndex: 'Abstract',
-        key: 'Abstract',
-        className: 'wrapText',
-        
-        render: (text, record) => {
-          const truncatedText = text.slice(0, 100) + (text.length > 100 ? '...' : '');
-          const displayText = expandedKey === record.key ? text : truncatedText;
-          
-          return (
-            <span
-              
-              style={{ cursor: 'pointer' }}
-              onClick={() => setExpandedKey(expandedKey === record.key ? null : record.key)}
-            >
-              {displayText}
-            </span>
-          );
-        },
       },
       
       {
