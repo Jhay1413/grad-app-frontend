@@ -89,6 +89,11 @@ const ResearchPage = () => {
         },
       },
       {
+        title: 'Remarks',
+        dataIndex: 'Remarks',
+        key: 'Remarks',
+      },
+      {
         title: 'fund source',
         dataIndex: 'FundSource',
         key: 'FundSource',
@@ -112,11 +117,6 @@ const ResearchPage = () => {
         title: 'Acceptance Date',
         dataIndex: 'AcceptanceDate',
         key: 'AcceptanceDate',
-      },
-      {
-        title: 'Remarks',
-        dataIndex: 'Remarks',
-        key: 'Remarks',
       },
       
       {
