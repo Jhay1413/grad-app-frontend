@@ -5,16 +5,20 @@ import { useEffect, useState } from 'react';
 import AddResearch from '../../admin-modals/addData';
 import { getResearch } from '../../../../api/research';
 import { deleteSpecificResearch } from '../../../../api/research';       
+import WarningModal from '../../admin-modals/warning';
 
 
 
 const ResearchPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDeleteModalOpen,setIsDeleteModalOpen] = useState(false);
+    const [recordToDelete,setRecordToDelete] = useState('');
     const [listResearch,setResearch] = useState([]);
     const [updateData,setUpdateData] = useState();
     const [dataChange,setDataChange] = useState(false);
     const [expandedKey, setExpandedKey] = useState(null);
     const [searchedData,setSearchData] = useState("");
+
     useEffect(()=>{
       async function getAllResearch() {
         try {
@@ -98,6 +102,7 @@ const ResearchPage = () => {
         dataIndex: 'Abstract',
         key: 'Abstract',
         className: 'wrapText',
+        
         render: (text, record) => {
           const truncatedText = text.slice(0, 100) + (text.length > 100 ? '...' : '');
           const displayText = expandedKey === record.key ? text : truncatedText;
@@ -128,10 +133,12 @@ const ResearchPage = () => {
         title:'Actions',
         dataIndex:'actions',
         key:'actions',
+        fixed: 'right',
+        width: 100,
         render:(text,record)=>(
           <Space size="middle">
-          <Button onClick={() => handleEdit(record)}>Edit</Button>
-          <Button onClick={() => handleDelete(record)}>Delete</Button>
+          <Button onClick={() => handleEdit(record)} >Edit</Button>
+          <Button onClick={() => handleDelete(record)} type="primary" danger>Delete</Button>
         </Space>
             
           
@@ -143,13 +150,10 @@ const ResearchPage = () => {
       setIsModalOpen(true);
     };
     
-    const handleDelete = async (record) => {
-      const response = await deleteSpecificResearch(record._id);
-
-      if(response.status === 200){
-        setDataChange(!dataChange);
-      }
-      console.log('Deleted Successfully',response);
+    const handleDelete = (record) => {
+      setRecordToDelete(record);
+      setIsDeleteModalOpen(!isDeleteModalOpen);
+     
     };
 
     return ( 
@@ -174,6 +178,7 @@ const ResearchPage = () => {
                
                 <Table  columns={columns}  dataSource = {listResearch.map(research=>({...research,key:research._id}))} scroll={{ x: 'max-content',}} pagination={paginationConfig}/>
                 <AddResearch isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} updateData={updateData} setUpdatedata={setUpdateData} dataChange = {dataChange} setDataChange={setDataChange}/>
+                <WarningModal isDeleteModalOpen={isDeleteModalOpen} setIsDeleteModalOpen={setIsDeleteModalOpen} dataChange={dataChange} setDataChange={setDataChange} recordToDelete= {recordToDelete}/>
             </div>
           </div>
         </>
