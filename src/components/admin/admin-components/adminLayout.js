@@ -24,17 +24,11 @@ const AdminLayout = () => {
             </button>
           </div>
           <div className="p-4 flex-grow bg-gray-200">
-          {loading ? (
-                <LoadingComponent/>
-              
-            ):(
-             
             <Routes>
                 <Route  path="/" element={<AdminIndex/>} />
                 <Route  path="/research"  element={<ResearchPage loading={loading} setLoading={setLoading}/>} />
             </Routes>
-            )
-          }
+        
           </div>
         </div>
       </div>

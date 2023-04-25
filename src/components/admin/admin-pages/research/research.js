@@ -1,5 +1,5 @@
 
-import { Space, Table,Button ,Popover} from 'antd';
+import { Space, Table,Button ,Input} from 'antd';
 import { FormOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import AddResearch from '../../admin-modals/addData';
@@ -11,12 +11,33 @@ import { deleteSpecificResearch } from '../../../../api/research';
 const ResearchPage = ({loading,setLoading}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [listResearch,setResearch] = useState([]);
+    const [tempResData,setTempResData] = useState('');
     const [updateData,setUpdateData] = useState();
     const [dataChange,setDataChange] = useState(false);
-   
+    const [expandedKey, setExpandedKey] = useState(null);
+
+  
+    useEffect(()=>{
+      async function getAllResearch() {
+        try {
+        
+          const {status,data} = await getResearch();
+          console.log(status);
+          setResearch(data);
+        
+       
+        } catch (error) {
+          console.error('Error fetching research:', error);
+          
+        }
+    }
+      getAllResearch();
+    }, [dataChange]);
+
+  
 
     const paginationConfig = {
-      pageSize: 3, // Set the number of records per page to 10
+      pageSize: 10, // Set the number of records per page to 10
     };
     const columns = [
       {
@@ -70,15 +91,20 @@ const ResearchPage = ({loading,setLoading}) => {
         dataIndex: 'Abstract',
         key: 'Abstract',
         className: 'wrapText',
-        render: (text) => {
+        render: (text, record) => {
           const truncatedText = text.slice(0, 100) + (text.length > 100 ? '...' : '');
+          const displayText = expandedKey === record.key ? text : truncatedText;
+          
           return (
-            <Popover content={<p>{text}</p>} title="Abstract" trigger="click">
-              <span style={{ cursor: 'pointer' }}>{truncatedText}</span>
-            </Popover>
+            <span
+              
+              style={{ cursor: 'pointer' }}
+              onClick={() => setExpandedKey(expandedKey === record.key ? null : record.key)}
+            >
+              {displayText}
+            </span>
           );
         },
-    
       },
       
       {
@@ -105,21 +131,6 @@ const ResearchPage = ({loading,setLoading}) => {
         )
       }
     ];
-    useEffect(()=>{
-      async function getAllResearch() {
-        try {
-        
-          const {status,data} = await getResearch();
-          console.log(status);
-          setResearch(data);
-         
-        } catch (error) {
-          console.error('Error fetching research:', error);
-          
-        }
-    }
-      getAllResearch();
-    }, [dataChange]);
 
     const handleCancel = ()=>{
     
@@ -137,7 +148,7 @@ const ResearchPage = ({loading,setLoading}) => {
       if(response.status === 200){
         setDataChange(!dataChange);
       }
-      console.log('Error Deleting the data',response);
+      console.log('Deleted Successfully',response);
     };
     const addButtonClick = () =>{
       setIsModalOpen(true);
@@ -145,12 +156,16 @@ const ResearchPage = ({loading,setLoading}) => {
     const loadingState = () =>{
       setLoading(!loading);
     }
+    const dataSource = () =>{
+
+    }
     return ( 
         <>
-          <div className='min-w-11/12 bg-white mx-auto'>
+          <div className='max-w-7xl bg-white mx-auto'>
             <div className='flex flex-col p-5'>
-              <button className='flex p-5' onClick={addButtonClick}><FormOutlined style={{ fontSize: '30px', color: '#08c' }}/></button>
-                <Table columns={columns}   dataSource = {listResearch.map(research=>({...research,key:research._id}))} scroll={{ x: 'max-content',}} pagination={paginationConfig}/>
+             
+                <button className='flex p-5' onClick={addButtonClick}><FormOutlined style={{ fontSize: '30px', color: '#08c' }}/></button>
+                <Table className = ' ' columns={columns}  dataSource = {listResearch.map(research=>({...research,key:research._id}))} scroll={{ x: 'max-content',}} pagination={paginationConfig}/>
                 <AddResearch isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} handleCancel={handleCancel} updateData={updateData} setUpdatedata={setUpdateData} dataChange = {dataChange} setDataChange={setDataChange} loadingState={loadingState}/>
             </div>
           </div>

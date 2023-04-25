@@ -35,6 +35,10 @@ const AdminSidebar = ({showSidebar}) => {
                                 <ReadFilled   />
                                 <Link to="/admin/research" className="hover:text-lg">Research</Link>
                                 </li>
+                                <li className={`flex items-center justify-start space-x-3 rounded-lg p-2`}>
+                                <ReadFilled   />
+                                <Link to="/admin/research" className="hover:text-lg">Agency</Link>
+                                </li>
                             </>
                         )}
              

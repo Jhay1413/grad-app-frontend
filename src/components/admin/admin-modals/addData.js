@@ -2,9 +2,10 @@ import {Modal
   } from 'antd';
   import { useState,useRef, useEffect } from 'react';
   import { addResearch,UpdateResearch } from '../../../api/research';
+import LoadingComponent from '../../common/loading/loading';
 
-const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChange,setDataChange,loadingState}) => {
-   
+const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChange,setDataChange}) => {
+  const [loading,setLoading] = useState(false);
   const formRef = useRef(null);
   const [formValues, setFormValues] = useState({
     ResearchName: '',
@@ -52,12 +53,14 @@ const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChan
     if(updateData){
 
       try {
+        setLoading(true);
         const response = await UpdateResearch(updateData._id,formValues);
         console.log(response)
         setDataChange(!dataChange);
 
       } catch (error) {
       }
+      setLoading(false);
       handleCancel();
         
     }
@@ -85,7 +88,7 @@ const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChan
   const resetForm = () =>{
     formRef.current.reset();
     setFormValues({
-      ResearchName: '',
+    ResearchName: '',
     Beneficiaries: '',
     Abstract: '',
     Proponents:'',
@@ -100,8 +103,14 @@ const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChan
   
     return ( 
         <>
-             <Modal title="Research Form" open = {isModalOpen} onCancel={cancleUpdate} footer={null}>
-               <form onSubmit={handleSubmit} ref={formRef}>
+          <Modal title="Research Form" open = {isModalOpen} onCancel={cancleUpdate} footer={null}>
+            <div className="relative flex items-center">
+              {loading && (
+                <div className="absolute inset-0 flex items-center justify-center z-10 bg-opacity-50 bg-gray-300">
+                  <LoadingComponent />
+                </div>
+              )}
+              <form onSubmit={handleSubmit} ref={formRef}>
                 <div className='flex flex-col'>
                   <div className='flex flex-col md:grid md:grid-cols-4 md:gap-2'>
                     <label className='col-span-2'>
@@ -149,10 +158,11 @@ const AddResearch = ({isModalOpen,handleCancel,updateData,setUpdatedata,dataChan
                   {updateData ?(
                      <button className='p-2 bg-green-500 my-2 text-white'>Update</button>
                   ):(
-                    <button className='p-2 bg-blue-500 my-2 text-white rounded-md'>submit</button>
+                    <button className='p-2 bg-blue-500 my-2 text-white rounded-md'>Submit</button>
                   )}
-                  
+                
                 </form>
+            </div>
             </Modal>
         </>
      );
