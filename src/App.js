@@ -16,8 +16,7 @@ function App() {
         </Routes>
         
       </div>
-    </BrowserRouter>
-   
+    </BrowserRouter>  
   );
 }
 

@@ -40,9 +40,9 @@ const ResearchPage = ({loading,setLoading}) => {
         key: 'FundSource',
       },
       {
-        title: 'patents',
-        dataIndex: 'Patents',
-        key: 'Patents',
+        title: 'No Of Patents',
+        dataIndex: 'NoOfPatents',
+        key: 'NoOfPatents',
       },
       {
         title: 'No. Of Utility Models',
