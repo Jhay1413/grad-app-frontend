@@ -11,11 +11,10 @@ import { deleteSpecificResearch } from '../../../../api/research';
 const ResearchPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [listResearch,setResearch] = useState([]);
-    const [tempResData,setTempResData] = useState('');
     const [updateData,setUpdateData] = useState();
     const [dataChange,setDataChange] = useState(false);
     const [expandedKey, setExpandedKey] = useState(null);
-
+    const [searchedData,setSearchData] = useState("");
     useEffect(()=>{
       async function getAllResearch() {
         try {
@@ -39,7 +38,20 @@ const ResearchPage = () => {
         title: 'Research Title',
         dataIndex: 'ResearchName',
         key: 'ResearchName',
-        className: 'wrapText'
+        className: 'wrapText',
+        filteredValue: [searchedData],
+        onFilter:(value,record)=>{
+          return (
+            String(record.ResearchName)
+            .toLowerCase()
+            .includes(value.toLowerCase()) ||
+            String(record.Proponents)
+            .toLowerCase()
+            .includes(value.toLowerCase()) ||
+            String(record.Beneficiaries)
+            .toLowerCase()
+            .includes(value.toLowerCase()))
+        }
       },
       {
         title: 'Proponents',
@@ -143,8 +155,23 @@ const ResearchPage = () => {
     return ( 
         <>
           <div className='max-w-screen-2xl bg-white mx-auto'>
+          
             <div className='flex flex-col p-5'>
-                <button className='flex p-5' onClick={()=>setIsModalOpen(!isModalOpen)}><FormOutlined style={{ fontSize: '30px', color: '#08c' }}/></button>
+              <div className='flex p-5 text-xl font-medium md:text-4xl'>
+                Research Table
+              </div>
+            
+              <div className='flex  md:justify-between p-5 '>
+                <button className='' onClick={()=>setIsModalOpen(!isModalOpen)}><FormOutlined style={{ fontSize: '30px', color: '#08c' }}/></button>
+                  <Input.Search 
+                    placeholder='searchbox'
+                    onChange={(e)=>{
+                      setSearchData(e.target.value.toLowerCase());
+                    }}
+                    className='md:w-52 p-2'
+                    />
+              </div>
+               
                 <Table  columns={columns}  dataSource = {listResearch.map(research=>({...research,key:research._id}))} scroll={{ x: 'max-content',}} pagination={paginationConfig}/>
                 <AddResearch isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} updateData={updateData} setUpdatedata={setUpdateData} dataChange = {dataChange} setDataChange={setDataChange}/>
             </div>

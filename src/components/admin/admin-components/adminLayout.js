@@ -21,7 +21,7 @@ const AdminLayout = () => {
               <span>{showSidebar ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}</span>
             </button>
           </div>
-          <div className="p-4 flex-grow bg-gray-200 w-full relative">
+          <div className="p-4 flex-grow bg-gray-200 w-full ">
             <Routes>
                 <Route  path="/" element={<AdminIndex/>} />
                 <Route  path="/research"  element={<ResearchPage loading={loading} setLoading={setLoading}/>} />
