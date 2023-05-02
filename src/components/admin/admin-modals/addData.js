@@ -3,22 +3,30 @@ import {Modal
   import { useState,useRef, useEffect } from 'react';
   import { addResearch,UpdateResearch } from '../../../api/research';
 import LoadingComponent from '../../common/loading/loading';
+import {toast} from  'react-toastify';
 
-const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataChange,setDataChange}) => {
+const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataChange,setDataChange,showToast}) => {
   const [loading,setLoading] = useState(false);
   const formRef = useRef(null);
 
   const [formValues, setFormValues] = useState({
     ResearchName: '',
-    Beneficiaries: '',
-    Abstract: '',
-    Proponents:'',
-    FundSource: '',
-    NoOfPatents: '',
-    Cite: '',
-    AcceptanceDate:'',
-    NoOfUtilModel: '',
-    Remarks: '',
+      Beneficiaries: '',
+      Abstract: '',
+      Proponents:'',
+      FundSource: '',
+      NoOfPatents: '',
+      Cite: '',
+      NoOfUtilModel: '',
+      Remarks: '',
+      Details:{
+        published: false,
+        yearStarted: '',
+        yearCompleted: '',
+        acceptanceDate: '',
+        agency: '',
+        region: '',
+    }
   });
   useEffect(()=>{
     
@@ -31,32 +39,63 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
         FundSource: updateData.FundSource|| '',
         NoOfPatents: updateData.NoOfPatents|| '',
         Cite: updateData.Cite|| '',
-        AcceptanceDate:updateData.AcceptanceDate || '',
         NoOfUtilModel: updateData.NoOfUtilModel|| '',
         Remarks: updateData.Remarks || '',
+        Details:{
+          published: updateData.Details && updateData.Details.published !== undefined ? updateData.Details.published : '',
+          yearStarted: updateData.Details && updateData.Details.yearStarted !== undefined ? updateData.Details.yearStarted : '',
+          yearCompleted: updateData.Details && updateData.Details.yearCompleted !== undefined ? updateData.Details.yearCompleted: '',
+          agency: updateData.Details && updateData.Details.agency !== undefined ? updateData.Details.agency: '',
+          acceptanceDate: updateData.Details && updateData.Details.acceptanceDate !== undefined ? updateData.Details.acceptanceDate: '',
+          region: updateData.Details && updateData.Details.region !== undefined ? updateData.Details.region: '',
+        }
       })
     }
     
   },[updateData])
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormValues({
-      ...formValues,
-      [name]: value
-    });
-  };
+    const { name, type, value, checked } = event.target;
+   
 
+    let inputValue;
+
+    if (type === 'checkbox') {
+      inputValue = checked ? 'Yes' : 'No'; // Replace 'CheckedValue' and 'UncheckedValue' with your desired strings
+    } else {
+      inputValue = value;
+    }
+  
+    const keys = name.split('.');
+  
+    if (keys.length > 1) {
+      setFormValues((prevState) => ({
+        ...prevState,
+        [keys[0]]: {
+          ...prevState[keys[0]],
+          [keys[1]]: inputValue,
+        },
+      }));
+    } else {
+      setFormValues((prevState) => ({
+        ...prevState,
+        [name]: inputValue,
+      }));
+    }
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+   
     if(updateData){
       try {
         setLoading(true);
         const response = await UpdateResearch(updateData._id,formValues);
-        console.log(response)
+        showToast('success');
         setDataChange(!dataChange);
 
       } catch (error) {
+        showToast('error');
         console.log(error);
       }
       setLoading(false);
@@ -66,11 +105,12 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
     else{
       try {
         const response = await addResearch(formValues);
-        console.log(response)
+        showToast('success');
         setDataChange(!dataChange);
         setIsModalOpen(!isModalOpen);
       
       } catch (error) {
+        showToast('error');
         console.log(error);
       }
     }
@@ -87,16 +127,23 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
   const resetForm = () =>{
     formRef.current.reset();
     setFormValues({
-    ResearchName: '',
-    Beneficiaries: '',
-    Abstract: '',
-    Proponents:'',
-    FundSource: '',
-    NoOfPatents: '',
-    Cite: '',
-    AcceptanceDate: '',
-    NoOfUtilModel: '',
-    Remarks: '',
+      ResearchName: '',
+      Beneficiaries: '',
+      Abstract: '',
+      Proponents:'',
+      FundSource: '',
+      NoOfPatents: '',
+      Cite: '',
+      NoOfUtilModel: '',
+      Remarks: '',
+      Details:{
+        published: '',
+        yearStarted: '',
+        yearCompleted: '',
+        AcceptanceDate: '',
+        agency: '',
+        region: '',
+      }
     });
   }
   
@@ -112,6 +159,19 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
               <form onSubmit={handleSubmit} ref={formRef}>
                 <div className='flex flex-col'>
                   <div className='flex flex-col md:grid md:grid-cols-4 md:gap-2'>
+                  <label htmlFor="option1" className="flex items-center col-span-4 ">
+                     
+                     <input
+                       type="checkbox"
+                       id="booleanValue"
+                       name="Details.published"
+                       checked={formValues.Details.published === 'Yes'}
+                       onChange={handleInputChange}
+                       className="form-checkbox text-blue-500 h-5 w-5"
+                     />
+                     <span className="ml-2 text-lg">Published</span>
+                   
+                   </label>
                     <label className='col-span-2'>
                       Research Title:
                       <input type="text"  className="appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="ResearchName" value={formValues.ResearchName} onChange={handleInputChange} />
@@ -141,10 +201,6 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
                       <input type="text" className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="Cite" value={formValues.Cite} onChange={handleInputChange} />
                     </label>
                     <label className='col-span-4'>
-                      Date
-                      <input type="date" className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="AcceptanceDate" value={formValues.AcceptanceDate} onChange={handleInputChange} />
-                    </label>
-                    <label className='col-span-4'>
                       Research Abstract
                       <textarea className="appearance-none  w-full h-20 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="Abstract" value={formValues.Abstract} onChange={handleInputChange} />
                     </label>
@@ -152,6 +208,52 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
                       Remarks
                       <input type="text" className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="Remarks" value={formValues.Remarks} onChange={handleInputChange} />
                     </label>
+                    <label className='col-span-1'>
+                      Year Started
+                      <input 
+                        type="number" 
+                        className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                        name="Details.yearStarted" 
+                        value={formValues.Details.yearStarted} onChange={handleInputChange} />
+                        
+                    </label>
+                    <label className='col-span-1'>
+                      Year Completed
+                      <input 
+                        type="number" 
+                        className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                        name="Details.yearCompleted" 
+                        value={formValues.Details.yearCompleted} onChange={handleInputChange} />
+                        
+                    </label>
+                    <label className='col-span-2'>
+                      AcceptanceDate
+                      <input 
+                        type="Date" 
+                        className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                        name="Details.acceptanceDate" 
+                        value={formValues.Details.acceptanceDate} onChange={handleInputChange} />
+  
+                    </label>
+                    <label className='col-span-2'>
+                      Region
+                      <input 
+                        type="text" 
+                        className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                        name="Details.region" 
+                        value={formValues.Details.region} onChange={handleInputChange} />
+  
+                    </label>
+                    <label className='col-span-2'>
+                      Agency
+                      <input 
+                        type="text" 
+                        className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                        name="Details.agency" 
+                        value={formValues.Details.agency} onChange={handleInputChange} />
+  
+                    </label>
+                   
                   </div>
                 </div>
                   {updateData ?(

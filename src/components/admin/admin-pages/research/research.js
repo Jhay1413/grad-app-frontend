@@ -6,7 +6,7 @@ import AddResearch from '../../admin-modals/addData';
 import { getResearch } from '../../../../api/research';
 import { deleteSpecificResearch } from '../../../../api/research';       
 import WarningModal from '../../admin-modals/warning';
-
+import {toast,ToastContainer} from 'react-toastify';
 
 
 const ResearchPage = () => {
@@ -24,7 +24,7 @@ const ResearchPage = () => {
         try {
         
           const {status,data} = await getResearch();
-          console.log(status);
+          console.log()
           setResearch(data);
         } catch (error) {
           console.error('Error fetching research:', error);
@@ -33,9 +33,70 @@ const ResearchPage = () => {
     }
       getAllResearch();
     }, [dataChange]);
+    const showToast = (status) =>{
+      toast[status]('Success message!');
+     
+    }
 
     const paginationConfig = {
       pageSize: 10, // Set the number of records per page to 10
+    };
+    const expandedRowRender = (record) =>{
+      const dataSource = [record.Details];
+
+   
+    
+
+      const nestedColumns = [
+        {
+          title: 'Published',
+          dataIndex: 'published',
+          key: 'published'
+        },
+        {
+          title: 'Year Started',
+          dataIndex: 'yearStarted',
+          key: 'yearStarted'
+        },
+        {
+          title: 'Year Completed',
+          dataIndex: 'yearCompleted',
+          key: 'yearCompleted'
+        },
+        {
+          title: 'Acceptance Date',
+          dataIndex: 'acceptanceDate',
+          key: 'acceptanceDate'
+        },
+        {
+          title: 'Agency',
+          dataIndex: 'agency',
+          key: 'agency'
+        },
+        {
+          title: 'Region',
+          dataIndex: 'region',
+          key: 'region'
+        },
+        {
+          title: 'Created At',
+          dataIndex: 'createdAt',
+          key: 'createdAt'
+        },
+        {
+          title: 'Updated At',
+          dataIndex: 'updatedAt',
+          key: 'updatedAt'
+        }
+      ]
+      return (
+        <Table
+          columns={nestedColumns}
+          dataSource = {dataSource.map(details=>({...details,key:details._id}))} 
+          pagination={false}
+        />
+      );
+
     };
     const columns = [
       {
@@ -113,11 +174,6 @@ const ResearchPage = () => {
         dataIndex: 'Cite',
         key: 'Cite',
       },
-      {
-        title: 'Acceptance Date',
-        dataIndex: 'AcceptanceDate',
-        key: 'AcceptanceDate',
-      },
       
       {
         title: 'CreatedAt',
@@ -159,7 +215,7 @@ const ResearchPage = () => {
     return ( 
         <>
           <div className='max-w-screen-2xl bg-white mx-auto'>
-          
+            <ToastContainer/>
             <div className='flex flex-col p-5'>
               <div className='flex p-5 text-xl font-medium md:text-4xl'>
                 Research Table
@@ -176,9 +232,14 @@ const ResearchPage = () => {
                     />
               </div>
                
-                <Table  columns={columns}  dataSource = {listResearch.map(research=>({...research,key:research._id}))} scroll={{ x: 'max-content',}} pagination={paginationConfig}/>
-                <AddResearch isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} updateData={updateData} setUpdatedata={setUpdateData} dataChange = {dataChange} setDataChange={setDataChange}/>
+                <Table  
+                  columns={columns}  
+                  dataSource = {listResearch.map(research=>({...research,key:research._id}))} 
+                  scroll={{ x: 'max-content',}} pagination={paginationConfig}
+                  expandedRowRender = {expandedRowRender}/>
+                <AddResearch isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} updateData={updateData} setUpdatedata={setUpdateData} dataChange = {dataChange} setDataChange={setDataChange} showToast={showToast}/>
                 <WarningModal isDeleteModalOpen={isDeleteModalOpen} setIsDeleteModalOpen={setIsDeleteModalOpen} dataChange={dataChange} setDataChange={setDataChange} recordToDelete= {recordToDelete}/>
+                 
             </div>
           </div>
         </>
