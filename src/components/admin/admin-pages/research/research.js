@@ -33,9 +33,8 @@ const ResearchPage = () => {
     }
       getAllResearch();
     }, [dataChange]);
-    const showToast = (status) =>{
-      toast[status]('Success message!');
-     
+    const showToast = (status,message) =>{
+      toast[status](message);
     }
 
     const paginationConfig = {
@@ -59,11 +58,6 @@ const ResearchPage = () => {
           title: 'Year Completed',
           dataIndex: 'yearCompleted',
           key: 'yearCompleted'
-        },
-        {
-          title: 'Acceptance Date',
-          dataIndex: 'acceptanceDate',
-          key: 'acceptanceDate'
         },
         {
           title: 'Agency',
@@ -235,7 +229,7 @@ const ResearchPage = () => {
                   scroll={{ x: 'max-content',}} pagination={paginationConfig}
                   expandedRowRender = {expandedRowRender}/>
                 <AddResearch isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} updateData={updateData} setUpdatedata={setUpdateData} dataChange = {dataChange} setDataChange={setDataChange} showToast={showToast}/>
-                <WarningModal isDeleteModalOpen={isDeleteModalOpen} setIsDeleteModalOpen={setIsDeleteModalOpen} dataChange={dataChange} setDataChange={setDataChange} recordToDelete= {recordToDelete}/>
+                <WarningModal isDeleteModalOpen={isDeleteModalOpen} setIsDeleteModalOpen={setIsDeleteModalOpen} dataChange={dataChange} setDataChange={setDataChange} recordToDelete= {recordToDelete} showToast ={showToast}/>
                  
             </div>
           </div>

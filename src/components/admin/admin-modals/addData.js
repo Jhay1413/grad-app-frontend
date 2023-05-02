@@ -3,7 +3,6 @@ import {Modal
   import { useState,useRef, useEffect } from 'react';
   import { addResearch,UpdateResearch } from '../../../api/research';
 import LoadingComponent from '../../common/loading/loading';
-import {toast} from  'react-toastify';
 
 const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataChange,setDataChange,showToast}) => {
   const [loading,setLoading] = useState(false);
@@ -20,10 +19,9 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
       NoOfUtilModel: '',
       Remarks: '',
       Details:{
-        published: false,
+        published: 'No',
         yearStarted: '',
         yearCompleted: '',
-        acceptanceDate: '',
         agency: '',
         region: '',
     }
@@ -42,12 +40,11 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
         NoOfUtilModel: updateData.NoOfUtilModel|| '',
         Remarks: updateData.Remarks || '',
         Details:{
-          published: updateData.Details && updateData.Details.published !== undefined ? updateData.Details.published : '',
-          yearStarted: updateData.Details && updateData.Details.yearStarted !== undefined ? updateData.Details.yearStarted : '',
-          yearCompleted: updateData.Details && updateData.Details.yearCompleted !== undefined ? updateData.Details.yearCompleted: '',
-          agency: updateData.Details && updateData.Details.agency !== undefined ? updateData.Details.agency: '',
-          acceptanceDate: updateData.Details && updateData.Details.acceptanceDate !== undefined ? updateData.Details.acceptanceDate: '',
-          region: updateData.Details && updateData.Details.region !== undefined ? updateData.Details.region: '',
+          published: updateData.Details && updateData.Details.published || '',
+          yearStarted: updateData.Details && updateData.Details.yearStarted  || '',
+          yearCompleted: updateData.Details && updateData.Details.yearCompleted || '',
+          agency: updateData.Details && updateData.Details.agency || '',
+          region: updateData.Details && updateData.Details.region || '',
         }
       })
     }
@@ -85,17 +82,16 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-
    
     if(updateData){
       try {
         setLoading(true);
         const response = await UpdateResearch(updateData._id,formValues);
-        showToast('success');
+        showToast('success','Data has been Updated !');
         setDataChange(!dataChange);
 
       } catch (error) {
-        showToast('error');
+        showToast('error','Data insertion Failed !');
         console.log(error);
       }
       setLoading(false);
@@ -105,12 +101,13 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
     else{
       try {
         const response = await addResearch(formValues);
-        showToast('success');
+        console.log(response)
+        showToast('success','Data has been Added !');
         setDataChange(!dataChange);
         setIsModalOpen(!isModalOpen);
       
       } catch (error) {
-        showToast('error');
+        showToast('error','Data insertion Failed !');
         console.log(error);
       }
     }
@@ -140,7 +137,6 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
         published: '',
         yearStarted: '',
         yearCompleted: '',
-        AcceptanceDate: '',
         agency: '',
         region: '',
       }
@@ -226,16 +222,7 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
                         value={formValues.Details.yearCompleted} onChange={handleInputChange} />
                         
                     </label>
-                    <label className='col-span-2'>
-                      AcceptanceDate
-                      <input 
-                        type="Date" 
-                        className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-                        name="Details.acceptanceDate" 
-                        value={formValues.Details.acceptanceDate} onChange={handleInputChange} />
-  
-                    </label>
-                    <label className='col-span-2'>
+                    <label className='col-span-1'>
                       Region
                       <input 
                         type="text" 
@@ -244,7 +231,7 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
                         value={formValues.Details.region} onChange={handleInputChange} />
   
                     </label>
-                    <label className='col-span-2'>
+                    <label className='col-span-1'>
                       Agency
                       <input 
                         type="text" 

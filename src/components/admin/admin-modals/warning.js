@@ -1,18 +1,23 @@
 import { Modal } from "antd";
 import { deleteSpecificResearch } from "../../../api/research";
-const WarningModal = ({isDeleteModalOpen,setIsDeleteModalOpen,recordToDelete,dataChange,setDataChange}) => {
+const WarningModal = ({isDeleteModalOpen,setIsDeleteModalOpen,recordToDelete,dataChange,setDataChange,showToast}) => {
 
     const cancelDelete = () =>{
         setIsDeleteModalOpen(!isDeleteModalOpen);
     }
     const confirmDeleteRecord = async () =>{
-        const response = await deleteSpecificResearch(recordToDelete._id);
-
-        if(response.status === 200){
-          setDataChange(!dataChange);
+        try{
+            const response = await deleteSpecificResearch(recordToDelete._id);
+            showToast('success','Data Deleted Successfully !')
+            setIsDeleteModalOpen(!isDeleteModalOpen);
+            setDataChange(!dataChange);
+            
+        }catch(error){
+            console.log(error);
+            showToast('error','Data Deletion Failed !')
         }
-        console.log('Deleted Successfully',response);
-        setIsDeleteModalOpen(!isDeleteModalOpen);
+       
+
     }
     const abortDelete = () =>{
         setIsDeleteModalOpen(!isDeleteModalOpen);
