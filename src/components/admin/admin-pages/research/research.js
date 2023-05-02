@@ -42,10 +42,7 @@ const ResearchPage = () => {
       pageSize: 10, // Set the number of records per page to 10
     };
     const expandedRowRender = (record) =>{
-      const dataSource = [record.Details];
-
-   
-    
+      const dataSource = record.Details ? [record.Details]: [];
 
       const nestedColumns = [
         {
@@ -92,7 +89,7 @@ const ResearchPage = () => {
       return (
         <Table
           columns={nestedColumns}
-          dataSource = {dataSource.map(details=>({...details,key:details._id}))} 
+          dataSource = {dataSource ? dataSource.map(details=>({...details,key:details._id})): [] }
           pagination={false}
         />
       );
