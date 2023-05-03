@@ -1,4 +1,4 @@
-const LandingPage = () => {
+const LoginPage = () => {
     return ( 
         <>
             
@@ -6,4 +6,4 @@ const LandingPage = () => {
      );
 }
  
-export default LandingPage;
+export default LoginPage;
