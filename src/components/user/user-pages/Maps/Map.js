@@ -21,19 +21,18 @@ const MapComponent = () => {
   const mapboxTileUrl = `https://api.mapbox.com/styles/v1/${mapboxStyle}/tiles/{z}/{x}/{y}?access_token=${mapboxAccessToken}`;
     return ( 
         <>
-       
-                    <MapContainer center={position} zoom={15} >
-                        <TileLayer
-                            attribution='&copy; <a href="https://www.mapbox.com/feedback/">Mapbox</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                            url={mapboxTileUrl}
-                        />
-                        {markers.map((marker)=>(
-                            <Marker position={marker.geocode} icon={customIcon}>
-                                <Popup>{marker.popUp}</Popup>
-                            </Marker>
-                        ))}
-            </MapContainer>
-          
+
+                <MapContainer center={position} zoom={15} >
+                    <TileLayer
+                        attribution='&copy; <a href="https://www.mapbox.com/feedback/">Mapbox</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                        url={mapboxTileUrl}
+                    />
+                    {markers.map((marker,index)=>(
+                        <Marker key={index} position={marker.geocode} icon={customIcon}>
+                            <Popup>{marker.popUp}</Popup>
+                        </Marker>
+                    ))}
+                </MapContainer>          
            
         </>
      );

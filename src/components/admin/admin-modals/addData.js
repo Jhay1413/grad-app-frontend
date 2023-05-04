@@ -40,11 +40,11 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
         NoOfUtilModel: updateData.NoOfUtilModel|| '',
         Remarks: updateData.Remarks || '',
         Details:{
-          published: updateData.Details && updateData.Details.published || '',
-          yearStarted: updateData.Details && updateData.Details.yearStarted  || '',
-          yearCompleted: updateData.Details && updateData.Details.yearCompleted || '',
-          agency: updateData.Details && updateData.Details.agency || '',
-          region: updateData.Details && updateData.Details.region || '',
+          published: (updateData.Details && updateData.Details.published) || '',
+          yearStarted: (updateData.Details && updateData.Details.yearStarted)  || '',
+          yearCompleted: (updateData.Details && updateData.Details.yearCompleted) || '',
+          agency: (updateData.Details && updateData.Details.agency) || '',
+          region: (updateData.Details && updateData.Details.region) || '',
         }
       })
     }
