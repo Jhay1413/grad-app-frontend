@@ -38,7 +38,7 @@ const ResearchPage = () => {
     }
 
     const paginationConfig = {
-      pageSize: 10, // Set the number of records per page to 10
+      // Set the number of records per page to 10
     };
     const expandedRowRender = (record) =>{
       const dataSource = record.Details ? [record.Details]: [];
@@ -165,23 +165,12 @@ const ResearchPage = () => {
         dataIndex: 'Cite',
         key: 'Cite',
       },
-      
-      {
-        title: 'CreatedAt',
-        dataIndex: 'createdAt',
-        key: 'createdAt',
-      },
-      {
-        title: 'UpdateAt',
-        dataIndex: 'updatedAt',
-        key: 'updatedAt',
-      },
       {
         title:'Actions',
         dataIndex:'actions',
         key:'actions',
         fixed: 'right',
-        width: 100,
+        width: 100 ,
         render:(text,record)=>(
           <Space size="middle">
           <Button onClick={() => handleEdit(record)} >Edit</Button>
@@ -226,7 +215,7 @@ const ResearchPage = () => {
                 <Table  
                   columns={columns}  
                   dataSource = {listResearch.map(research=>({...research,key:research._id}))} 
-                  scroll={{ x: 'max-content',}} pagination={paginationConfig}
+                  scroll={{ x: 'max-content',}}
                   expandedRowRender = {expandedRowRender}/>
                 <AddResearch isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} updateData={updateData} setUpdatedata={setUpdateData} dataChange = {dataChange} setDataChange={setDataChange} showToast={showToast}/>
                 <WarningModal isDeleteModalOpen={isDeleteModalOpen} setIsDeleteModalOpen={setIsDeleteModalOpen} dataChange={dataChange} setDataChange={setDataChange} recordToDelete= {recordToDelete} showToast ={showToast}/>

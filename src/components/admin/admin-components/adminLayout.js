@@ -5,6 +5,7 @@ import { useState } from 'react';
 import {Route, Routes } from 'react-router-dom';
 import AdminIndex from '../admin-pages';
 import ResearchPage from '../admin-pages/research/research';
+import AgencyIndex from '../admin-pages/agency/agency';
 
 const AdminLayout = () => {
     const [showSidebar,setShowSideBar] = useState(true);
@@ -25,6 +26,7 @@ const AdminLayout = () => {
             <Routes>
                 <Route  path="/" element={<AdminIndex/>} />
                 <Route  path="/research"  element={<ResearchPage loading={loading} setLoading={setLoading}/>} />
+                <Route  path="/agency"  element={<AgencyIndex loading={loading} setLoading={setLoading}/>} />
             </Routes>
         
           </div>
