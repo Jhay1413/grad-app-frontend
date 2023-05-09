@@ -10,3 +10,4 @@
   max-height: 100px; 
   overflow-y: auto;
 }
+.ant-table table { font-size: 12px; }
