@@ -37,9 +37,6 @@ const ResearchPage = () => {
       toast[status](message);
     }
 
-    const paginationConfig = {
-      // Set the number of records per page to 10
-    };
     const expandedRowRender = (record) =>{
       const dataSource = record.Details ? [record.Details]: [];
 
@@ -68,16 +65,6 @@ const ResearchPage = () => {
           title: 'Region',
           dataIndex: 'region',
           key: 'region'
-        },
-        {
-          title: 'Created At',
-          dataIndex: 'createdAt',
-          key: 'createdAt'
-        },
-        {
-          title: 'Updated At',
-          dataIndex: 'updatedAt',
-          key: 'updatedAt'
         }
       ]
       return (
@@ -115,6 +102,11 @@ const ResearchPage = () => {
         key: 'Proponents',
       },
       {
+        title: 'Adviser',
+        dataIndex: 'Adviser',
+        key: 'Adviser',
+      },
+      {
         title: 'beneficiaries',
         dataIndex: 'Beneficiaries',
         key: 'Beneficiaries',
@@ -139,6 +131,11 @@ const ResearchPage = () => {
             </span>
           );
         },
+      },
+      {
+        title: 'Dissertation',
+        dataIndex: 'Dissertation',
+        key: 'Dissertation',
       },
       {
         title: 'Remarks',

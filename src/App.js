@@ -5,18 +5,18 @@ import AdminLayout from './components/admin/admin-components/adminLayout';
 import { BrowserRouter,Route,Routes } from 'react-router-dom';
 import LandingPage from './components/user';
 import UserLayout from './components/user/component/UserLayout';
+import LoginPage from './components/common/Login/Index';
 
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
-     
         <Routes>
-          <Route exact path='*' Component={UserLayout}></Route>
-          <Route exact path='/admin/*' Component={AdminLayout}></Route>
+          <Route  path='*' element={<UserLayout/>}></Route>
+          <Route  path='/admin/*' element={<AdminLayout/>}></Route>
+          <Route  path='/login/*' element={<LoginPage/>}></Route>
         </Routes>
-        
       </div>
     </BrowserRouter>  
   );

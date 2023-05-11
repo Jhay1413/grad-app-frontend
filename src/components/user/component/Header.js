@@ -1,4 +1,5 @@
 import logo from '../../../assets/logo.png'
+import { Link } from 'react-router-dom';
 const Header = () => {
     return ( 
         <>
@@ -8,7 +9,7 @@ const Header = () => {
                 <div className='flex h-full'>
                 <ul className="flex p-5 justify-center items-center h-full space-x-5">
                         <li>Home</li>
-                        <li>Login</li>
+                        <li><Link to ='/login'>Login</Link></li>
                     </ul>
                 </div>
            

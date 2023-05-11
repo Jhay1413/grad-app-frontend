@@ -7,6 +7,26 @@ import LoadingComponent from '../../common/loading/loading';
 const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataChange,setDataChange,showToast}) => {
   const [loading,setLoading] = useState(false);
   const formRef = useRef(null);
+  const inputStyle = "appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
+  const renderInput = (type,name,value,placeholder = null )=>(
+    <input
+      type={type}
+      className={inputStyle}
+      name={name}
+      value={value}
+      onChange={handleInputChange}
+      placeholder={placeholder || name}
+    />
+  );
+  const renderTextArea = (name,value,placeholder='')=>(
+    <textarea
+      className={inputStyle}
+      name={name}
+      value={value}
+      onChange={handleInputChange}
+      placeholder={placeholder || name}
+    />
+  )
 
   const [formValues, setFormValues] = useState({
     ResearchName: '',
@@ -17,6 +37,8 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
       NoOfPatents: '',
       Cite: '',
       NoOfUtilModel: '',
+      Adviser: '',
+      Dissertation: '',
       Remarks: '',
       Details:{
         published: 'No',
@@ -36,6 +58,8 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
         Proponents:updateData.Proponents || '',
         FundSource: updateData.FundSource|| '',
         NoOfPatents: updateData.NoOfPatents|| '',
+        Adviser: updateData.Adviser|| '',
+        Dissertation: updateData.Adviser|| '',
         Cite: updateData.Cite|| '',
         NoOfUtilModel: updateData.NoOfUtilModel|| '',
         Remarks: updateData.Remarks || '',
@@ -53,18 +77,13 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
 
   const handleInputChange = (event) => {
     const { name, type, value, checked } = event.target;
-   
-
     let inputValue;
-
     if (type === 'checkbox') {
       inputValue = checked ? 'Yes' : 'No'; // Replace 'CheckedValue' and 'UncheckedValue' with your desired strings
     } else {
       inputValue = value;
     }
-  
     const keys = name.split('.');
-  
     if (keys.length > 1) {
       setFormValues((prevState) => ({
         ...prevState,
@@ -112,8 +131,6 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
       }
     }
     resetForm();
-   
-     // do something with the form data object
   };
   const cancelUpdate = () =>{
     setUpdatedata('');
@@ -132,6 +149,8 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
       NoOfPatents: '',
       Cite: '',
       NoOfUtilModel: '',
+      Adviser:'',
+      Dissertation:false,
       Remarks: '',
       Details:{
         published: '',
@@ -155,91 +174,87 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
               <form onSubmit={handleSubmit} ref={formRef}>
                 <div className='flex flex-col'>
                   <div className='flex flex-col md:grid md:grid-cols-4 md:gap-2'>
-                  <label htmlFor="option1" className="flex items-center col-span-4 ">
-                     
-                     <input
-                       type="checkbox"
-                       id="booleanValue"
-                       name="Details.published"
-                       checked={formValues.Details.published === 'Yes'}
-                       onChange={handleInputChange}
-                       className="form-checkbox text-blue-500 h-5 w-5"
-                     />
-                     <span className="ml-2 text-lg">Published</span>
-                   
-                   </label>
+                    <div className='flex justify-between col-span-4'>
+                      <label htmlFor="option1" className="flex items-center col-span-4 ">                     
+                        <input
+                          type="checkbox"
+                          id="booleanValue"
+                          name="Details.published"
+                          checked={formValues.Details.published === 'Yes'}
+                          onChange={handleInputChange}
+                          className="form-checkbox text-blue-500 h-5 w-5"
+                        />
+                        <span className="ml-2 text-lg">Published</span>                   
+                      </label>
+                      <label htmlFor="option1" className="flex items-center col-span-4 ">                     
+                        <input
+                          type="checkbox"
+                          id="booleanValue"
+                          name="Dissertation"
+                          checked={formValues.Dissertation === 'Yes'}
+                          onChange={handleInputChange}
+                          className="form-checkbox text-blue-500 h-5 w-5"
+                        />
+                        <span className="ml-2 text-lg">Dissertations</span>                   
+                      </label>
+                    </div>
                     <label className='col-span-2'>
-                      Research Title:
-                      <input type="text"  className="appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="ResearchName" value={formValues.ResearchName} onChange={handleInputChange} />
+                      Research Name:                     
+                      {renderInput("text","ResearchName",formValues.ResearchName)}
                     </label>
                     <label className='col-span-2'>
                       Beneficiaries:
-                      <input type="text" className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="Beneficiaries" value={formValues.Beneficiaries} onChange={handleInputChange} />
+                      {renderInput("text","Beneficiaries",formValues.Beneficiaries)}
                     </label>
-                    <label className='col-span-1'>
-                      Fund Source:
-                      <input type="text"  className="appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="FundSource" value={formValues.FundSource} onChange={handleInputChange} />
+                    <label className='col-span-2'>
+                      Proponents:
+                      {renderInput("text","Proponents",formValues.Proponents)}
+                    </label>
+                    <label className='col-span-2'>
+                      Adviser
+                      {renderInput("text","Adviser",formValues.Adviser)}
+                    </label>
+                    <label className='col-span-2'>
+                      FundSource:
+                      {renderInput("text","FundSource",formValues.FundSource)}
                     </label>
                     <label className='col-span-1'>
                       No. of Patents:
-                      <input type="number" className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Numbers" name="NoOfPatents" value={formValues.NoOfPatents} onChange={handleInputChange} />
+                      {renderInput("number","NoOfPatents",formValues.NoOfPatents)}
                     </label>
                     <label className='col-span-1 text-sm'>
-                      Utility Models
-                      <input type="number" className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Numbers" name="NoOfUtilModel" value={formValues.NoOfUtilModel} onChange={handleInputChange} />
+                      No. of Util Model
+                      {renderInput("number","NoOfUtilModel",formValues.NoOfUtilModel)}
                     </label>
                     <label className='col-span-1'>
-                      Proponents
-                      <input type="text" className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  name="Proponents" value={formValues.Proponents} onChange={handleInputChange} />
-                    </label>
-                    <label className='col-span-4'>
-                      How to Cite 
-                      <input type="text" className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="Cite" value={formValues.Cite} onChange={handleInputChange} />
-                    </label>
-                    <label className='col-span-4'>
-                      Research Abstract
-                      <textarea className="appearance-none  w-full h-20 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="Abstract" value={formValues.Abstract} onChange={handleInputChange} />
-                    </label>
-                    <label className='col-span-4 row-span-2'>
-                      Remarks
-                      <input type="text" className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="Remarks" value={formValues.Remarks} onChange={handleInputChange} />
+                      Year Started:
+                      {renderInput("number","Details.yearStarted",formValues.Details.yearStarted,"Year Started")}  
                     </label>
                     <label className='col-span-1'>
-                      Year Started
-                      <input 
-                        type="number" 
-                        className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-                        name="Details.yearStarted" 
-                        value={formValues.Details.yearStarted} onChange={handleInputChange} />
-                        
-                    </label>
-                    <label className='col-span-1'>
-                      Year Completed
-                      <input 
-                        type="number" 
-                        className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-                        name="Details.yearCompleted" 
-                        value={formValues.Details.yearCompleted} onChange={handleInputChange} />
-                        
+                      Year Completed:
+                      {renderInput("number","Details.yearCompleted",formValues.Details.yearCompleted,"Year Completed")} 
                     </label>
                     <label className='col-span-1'>
                       Region
-                      <input 
-                        type="text" 
-                        className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-                        name="Details.region" 
-                        value={formValues.Details.region} onChange={handleInputChange} />
-  
+                      {renderInput("number","Details.region",formValues.Details.region,"Region")} 
                     </label>
                     <label className='col-span-1'>
-                      Agency
-                      <input 
-                        type="text" 
-                        className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-                        name="Details.agency" 
-                        value={formValues.Details.agency} onChange={handleInputChange} />
-  
+                      Agency:
+                      {renderInput("text","Details.agency",formValues.Details.agency,"Agency")} 
                     </label>
+                    <label className='col-span-4'>
+                      How to Cite
+                      {renderInput("text","Cite",formValues.Cite)}
+                    </label>
+                    <label className='col-span-4 row-span-2'>
+                      Remarks:
+                      {renderInput("text","Remarks",formValues.Remarks)}
+                    </label>
+                    <label className='col-span-4'>
+                      Abstarct:
+                      {renderTextArea("Abstract",formValues.Abstract)}
+                    </label>
+                  
                    
                   </div>
                 </div>
