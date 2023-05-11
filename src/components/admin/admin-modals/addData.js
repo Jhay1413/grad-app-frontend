@@ -59,7 +59,7 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
         FundSource: updateData.FundSource|| '',
         NoOfPatents: updateData.NoOfPatents|| '',
         Adviser: updateData.Adviser|| '',
-        Dissertation: updateData.Adviser|| '',
+        Dissertation: updateData.Dissertation|| '',
         Cite: updateData.Cite|| '',
         NoOfUtilModel: updateData.NoOfUtilModel|| '',
         Remarks: updateData.Remarks || '',
