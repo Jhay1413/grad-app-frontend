@@ -72,7 +72,6 @@ const ResearchListIndex = () => {
             try{
                 const {data} = await getResearch();
                 setData(data);
-                console.log(data);
             }catch(error){
                 console.log('Error Fetching Data:',error)
             }

@@ -3,7 +3,6 @@ import axios from 'axios';
 const Research_API = process.env.REACT_APP_RESEARCH_API;
 
 export const getResearch = async () => {
-    console.log(Research_API);
     try {
       const response = await axios.get(`${Research_API}/getResearch`);
      
