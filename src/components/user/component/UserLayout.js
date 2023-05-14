@@ -20,7 +20,7 @@ const UserLayout = () => {
                     <Routes>
                         <Route path="/" element={<MapComponent/>} />
                         <Route path="/researchlist" element={<ResearchListIndex/>} />
-                        <Route path="/:name" element={<ResearchDetails/>} />
+                        <Route path="/details/:name" element={<ResearchDetails/>} />
                     </Routes>
                     </div>
             </div>

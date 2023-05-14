@@ -9,7 +9,7 @@ const Header = () => {
                 <div className='flex h-full'>
                 <ul className="flex p-5 justify-center items-center h-full space-x-5">
                         <li>Home</li>
-                        <li><Link to ='/login'>Login</Link></li>
+                        <li><Link to ='/auth'>Login</Link></li>
                     </ul>
                 </div>
            

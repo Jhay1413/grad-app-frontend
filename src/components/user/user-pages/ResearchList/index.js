@@ -81,7 +81,7 @@ const ResearchListIndex = () => {
     },[])
     const handleNameClick = (name,record) =>{
 
-        navigate(`/${name}`,{ state: { record } });
+        navigate(`/details/${name}`,{ state: { record } });
     }
     return ( 
         <>

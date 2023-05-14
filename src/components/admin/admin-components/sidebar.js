@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import {UserOutlined,HomeFilled,ReadFilled} from '@ant-design/icons';
+import {UserOutlined,HomeFilled,ReadFilled,FolderOpenFilled,AppstoreFilled,CrownFilled} from '@ant-design/icons';
 const AdminSidebar = ({showSidebar}) => {
     return ( 
         <>
@@ -36,11 +36,15 @@ const AdminSidebar = ({showSidebar}) => {
                                 <Link to="/admin/research" className="hover:text-lg">Research</Link>
                                 </li>
                                 <li className={`flex items-center justify-start space-x-3 rounded-lg p-2`}>
-                                <ReadFilled   />
+                                <AppstoreFilled  />
+                                <Link to="/admin/category" className="hover:text-lg">Category</Link>
+                                </li>
+                                <li className={`flex items-center justify-start space-x-3 rounded-lg p-2`}>
+                                <CrownFilled />
                                 <Link to="/admin/agency" className="hover:text-lg">Agency</Link>
                                 </li>
                                 <li className={`flex items-center justify-start space-x-3 rounded-lg p-2`}>
-                                <ReadFilled   />
+                                <FolderOpenFilled />
                                 <Link to="/admin/research" className="hover:text-lg">Accounts</Link>
                                 </li>
                             </>
