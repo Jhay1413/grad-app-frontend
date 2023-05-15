@@ -1,8 +1,19 @@
 import { ToastContainer } from "react-toastify";
 import { FormOutlined } from '@ant-design/icons';
 import { Table } from "antd";
+import { useEffect, useState } from "react";
 const CategoryIndexPage = () => {
+    const [category,setCategory] = useState([]);
 
+    useEffect(()=>{
+        async function getAllCategory(){
+            try {
+                   
+            } catch (error) {
+                
+            }
+        }
+    },[])
     const columns = [
         {
             title: 'Category ID',
