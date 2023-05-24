@@ -126,9 +126,6 @@ const ResearchListIndex = () => {
     const yearOptions = generateYear(startYear,currentYear);
     return ( 
         <>
-          <div className="mt-10">
-            
-          </div>
             <div className="w-full mx-auto h-full bg-white ">
               <div className="flex flex-col">
                 <div className="">
@@ -177,9 +174,7 @@ const ResearchListIndex = () => {
                         <div className="px-4 py-2 bg-green-400 rounded-lg">
                           
                           <button onClick = {handleFilterDownload} className="text-white">Download</button>
-                        </div>
-                          
-                     
+                        </div>             
                     </div>
                 </div>
                 <Table columns={Columns} dataSource = {dataSource}/>
