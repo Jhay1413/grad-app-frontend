@@ -15,8 +15,8 @@ const UserLayout = () => {
             <div className="pt-16">
                 <BannerPage/>
             </div>
-            <div className='h-screen w-full mx-auto bg-gray-200'>
-                    <div className='w-full h-full p-5'>
+            <div className='h-full w-full bg-gray-200'>
+                    <div className='w-full h-full'>
                     <Routes>
                         <Route path="/" element={<MapComponent/>} />
                         <Route path="/researchlist" element={<ResearchListIndex/>} />

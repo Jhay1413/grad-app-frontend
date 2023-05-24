@@ -14,7 +14,7 @@ const ResearchPage = () => {
     const [isDeleteModalOpen,setIsDeleteModalOpen] = useState(false);
     const [recordToDelete,setRecordToDelete] = useState('');
     const [listResearch,setResearch] = useState([]);
-    const [updateData,setUpdateData] = useState();
+    const [updateData,setUpdateData] = useState(null);
     const [dataChange,setDataChange] = useState(false);
     const [expandedKey, setExpandedKey] = useState(null);
     const [searchedData,setSearchData] = useState("");
@@ -24,7 +24,6 @@ const ResearchPage = () => {
         try {
         
           const {status,data} = await getResearch();
-          console.log()
           setResearch(data);
         } catch (error) {
           console.error('Error fetching research:', error);
@@ -188,6 +187,9 @@ const ResearchPage = () => {
       setIsDeleteModalOpen(!isDeleteModalOpen);
      
     };
+    const handleCancel = () =>{
+      setIsModalOpen(!isModalOpen);
+    }
 
     return ( 
         <>
@@ -214,7 +216,7 @@ const ResearchPage = () => {
                   dataSource = {listResearch.map(research=>({...research,key:research._id}))} 
                   scroll={{ x: 'max-content',}}
                   expandedRowRender = {expandedRowRender}/>
-                <AddResearch isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} updateData={updateData} setUpdatedata={setUpdateData} dataChange = {dataChange} setDataChange={setDataChange} showToast={showToast}/>
+                <AddResearch isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} updateData={updateData} setUpdateData={setUpdateData} handleCancel={handleCancel} dataChange={dataChange} setDataChange={setDataChange} showToast={showToast}/>
                 <WarningModal isDeleteModalOpen={isDeleteModalOpen} setIsDeleteModalOpen={setIsDeleteModalOpen} dataChange={dataChange} setDataChange={setDataChange} recordToDelete= {recordToDelete} showToast ={showToast}/>
                  
             </div>

@@ -1,6 +1,8 @@
 import {Link} from 'react-router-dom';
 import {UserOutlined,HomeFilled,ReadFilled,FolderOpenFilled,AppstoreFilled,CrownFilled} from '@ant-design/icons';
+import { useState } from 'react';
 const AdminSidebar = ({showSidebar}) => {
+    const [isDropdownVisible,setIsDropdownVisible] = useState(false);
     return ( 
         <>
             <div className='flex flex-col font-sans text-gray-300'>
@@ -35,9 +37,21 @@ const AdminSidebar = ({showSidebar}) => {
                                 <ReadFilled   />
                                 <Link to="/admin/research" className="hover:text-lg">Research</Link>
                                 </li>
-                                <li className={`flex items-center justify-start space-x-3 rounded-lg p-2`}>
-                                <AppstoreFilled  />
-                                <Link to="/admin/category" className="hover:text-lg">Category</Link>
+                                <li className={`flex flex-col rounded-lg p-2`}>
+                                   
+                                    <div className='space-x-3 items-center '>
+                                        <AppstoreFilled  />
+                                        <button onClick={()=>setIsDropdownVisible(!isDropdownVisible)} className='hover:text-lg'>
+                                            Category
+                                        </button>
+                                        {isDropdownVisible && (
+                                            <div className=" left-0 mt-2 w-48 rounded-md shadow-lg">
+                                            <Link to="/admin/category" className="block px-4 py-2 hover:text-lg">Main Category</Link>
+                                            <Link to="/admin/sub-category" className="block px-4 py-2 hover:text-lg">Sub Category</Link>
+                                            </div>
+                                        )}
+                                    </div>
+
                                 </li>
                                 <li className={`flex items-center justify-start space-x-3 rounded-lg p-2`}>
                                 <CrownFilled />

@@ -45,3 +45,24 @@ export const UpdateResearch = async(id,data)=>{
         console.error('Error on Updating the Data',error);
     }
 }
+export const FilterData = async (From,To) =>{
+  try {
+    const response = await axios.get(`${Research_API}/filteredData`,{
+      params:{
+        startYear:From,
+        endYear:To
+      }
+    })
+    return response;
+  } catch (error) {
+    
+  }
+}
+export const DownloadData = async(data)=>{
+  try {
+    const response = await axios.post(`${Research_API}/downloadData`,data, { responseType: 'blob' });
+    return response;
+  } catch (error) {
+    
+  }
+}

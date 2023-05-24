@@ -4,16 +4,15 @@ import {Modal
   import { addResearch,UpdateResearch } from '../../../api/research';
 import LoadingComponent from '../../common/loading/loading';
 
-const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataChange,setDataChange,showToast}) => {
+const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdateData,dataChange,setDataChange,handleCancel,showToast}) => {
   const [loading,setLoading] = useState(false);
-  const formRef = useRef(null);
   const inputStyle = "appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
   const renderInput = (type,name,value,placeholder = null )=>(
     <input
       type={type}
       className={inputStyle}
       name={name}
-      value={value}
+      value={value? value : ''}
       onChange={handleInputChange}
       placeholder={placeholder || name}
     />
@@ -22,7 +21,7 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
     <textarea
       className={inputStyle}
       name={name}
-      value={value}
+      value={value? value : ''}
       onChange={handleInputChange}
       placeholder={placeholder || name}
     />
@@ -51,24 +50,27 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
   useEffect(()=>{
     
     if(updateData){
+      setFormValues(updateData);
+    }
+    else{
       setFormValues({
-        ResearchName: updateData.ResearchName || '',
-        Beneficiaries: updateData.Beneficiaries || '',
-        Abstract: updateData.Abstract || '',
-        Proponents:updateData.Proponents || '',
-        FundSource: updateData.FundSource|| '',
-        NoOfPatents: updateData.NoOfPatents|| '',
-        Adviser: updateData.Adviser|| '',
-        Dissertation: updateData.Dissertation|| '',
-        Cite: updateData.Cite|| '',
-        NoOfUtilModel: updateData.NoOfUtilModel|| '',
-        Remarks: updateData.Remarks || '',
-        Details:{
-          published: (updateData.Details && updateData.Details.published) || '',
-          yearStarted: (updateData.Details && updateData.Details.yearStarted)  || '',
-          yearCompleted: (updateData.Details && updateData.Details.yearCompleted) || '',
-          agency: (updateData.Details && updateData.Details.agency) || '',
-          region: (updateData.Details && updateData.Details.region) || '',
+        ResearchName: '',
+          Beneficiaries: '',
+          Abstract: '',
+          Proponents:'',
+          FundSource: '',
+          NoOfPatents: '',
+          Cite: '',
+          NoOfUtilModel: '',
+          Adviser: '',
+          Dissertation: '',
+          Remarks: '',
+          Details:{
+            published: 'No',
+            yearStarted: '',
+            yearCompleted: '',
+            agency: '',
+            region: '',
         }
       })
     }
@@ -108,70 +110,65 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdatedata,dataCh
         const response = await UpdateResearch(updateData._id,formValues);
         showToast('success','Data has been Updated !');
         setDataChange(!dataChange);
+      
 
       } catch (error) {
         showToast('error','Data insertion Failed !');
         console.log(error);
       }
+      setUpdateData(null)
+      handleCancel();
       setLoading(false);
-      setIsModalOpen(!isModalOpen);
-        
+     
     }
     else{
       try {
         const response = await addResearch(formValues);
-        console.log(response)
         showToast('success','Data has been Added !');
-        setDataChange(!dataChange);
         setIsModalOpen(!isModalOpen);
+        setDataChange(!dataChange);
       
       } catch (error) {
         showToast('error','Data insertion Failed !');
         console.log(error);
       }
+      setFormValues({
+        ResearchName: '',
+          Beneficiaries: '',
+          Abstract: '',
+          Proponents:'',
+          FundSource: '',
+          NoOfPatents: '',
+          Cite: '',
+          NoOfUtilModel: '',
+          Adviser: '',
+          Dissertation: '',
+          Remarks: '',
+          Details:{
+            published: 'No',
+            yearStarted: '',
+            yearCompleted: '',
+            agency: '',
+            region: '',
+        }
+      })
+      setUpdateData(null);
+      handleCancel();
+      setLoading(false);
     }
-    resetForm();
   };
-  const cancelUpdate = () =>{
-    setUpdatedata('');
-    resetForm();
-    setIsModalOpen(!isModalOpen);
-  }
 
-  const resetForm = () =>{
-    formRef.current.reset();
-    setFormValues({
-      ResearchName: '',
-      Beneficiaries: '',
-      Abstract: '',
-      Proponents:'',
-      FundSource: '',
-      NoOfPatents: '',
-      Cite: '',
-      NoOfUtilModel: '',
-      Adviser:'',
-      Dissertation:false,
-      Remarks: '',
-      Details:{
-        published: '',
-        yearStarted: '',
-        yearCompleted: '',
-        agency: '',
-        region: '',
-      }
-    });
-  }
   
     return ( 
         <>
-          <Modal title="Research Form" open = {isModalOpen} onCancel={cancelUpdate} footer={null}>
+          <Modal title="Research Form" open = {isModalOpen} onCancel={handleCancel} footer={null}>
             <div className="relative flex items-center">
               {loading && (
                 <div className="absolute inset-0 flex items-center justify-center z-10 bg-opacity-50 bg-gray-300">
                   <LoadingComponent />
                 </div>
               )}
-              <form onSubmit={handleSubmit} ref={formRef}>
+              <form onSubmit={handleSubmit}>
                 <div className='flex flex-col'>
                   <div className='flex flex-col md:grid md:grid-cols-4 md:gap-2'>
                     <div className='flex justify-between col-span-4'>

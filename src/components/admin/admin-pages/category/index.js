@@ -1,30 +1,69 @@
 import { ToastContainer } from "react-toastify";
 import { FormOutlined } from '@ant-design/icons';
-import { Table } from "antd";
+import { Button, Space, Table } from "antd";
 import { useEffect, useState } from "react";
+import { getAllCategory } from "../../../../api/category";
+import AddCategoryModal from "./modals/addCategory";
 const CategoryIndexPage = () => {
     const [category,setCategory] = useState([]);
+    const [currentData,setCurrentData]= useState(null)
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [dataChange,setDataChange] = useState(false);
 
     useEffect(()=>{
-        async function getAllCategory(){
+        async function getCategoryList(){
             try {
-                   
-            } catch (error) {
+                const data = await getAllCategory();
+                setCategory(data.data);
                 
+               
+            } catch (error) {
+                console.log(error);
             }
+           
         }
-    },[])
+        getCategoryList();
+       
+    },[dataChange])
+
+    const handleEdit = async(data)=>{
+       
+        setCurrentData(data);
+        setIsModalOpen(!isModalOpen);
+    }
+    const handleCancel = () =>{
+        
+        setIsModalOpen(!isModalOpen);
+        setCurrentData(null);
+    }
+    const handleDelete = async(data)=>{
+
+    }
+
     const columns = [
         {
             title: 'Category ID',
-            dataIndex: 'categoryID',
-            key: 'categoryID'
+            dataIndex: '_id',
+            key: '_id'
         },
         {
             title: 'Category Name',
             dataIndex: 'categoryName',
             key: 'categoryName'
+        },
+        {
+            title: 'Actions',
+            dataIndex: 'actions',
+            key:'actions',
+            render:(text,record)=>(
+                <Space size ="middle">
+                <Button onClick={()=> handleEdit(record)}>Edit</Button>
+                <Button onClick = {() => handleDelete(record)}type="primary" danger>Delete</Button>
+            </Space>
+            )
+               
         }
+
     ]
     return ( 
         <>
@@ -35,14 +74,16 @@ const CategoryIndexPage = () => {
                         Category Table
                     </div>
                     <div className="flex md:justify-between p-5">
-                        <button className="" >
+                        <button className="" onClick={() => setIsModalOpen(!isModalOpen)} >
                             <FormOutlined style={{ fontSize: '30px', color: '#08c' }}/>
                         </button>
                     </div>
                     <div className="">
                         <Table
                             columns={columns}
+                            dataSource={category ? category.map(details=>({...details,key:details._id})): []}
                         />
+                        <AddCategoryModal isModalOpen={isModalOpen} currentData = {currentData} setCurrentData = {setCurrentData} handleCancel={handleCancel} dataChange={dataChange} setDataChange={setDataChange}/>
                     </div>
                 </div>
             </div>

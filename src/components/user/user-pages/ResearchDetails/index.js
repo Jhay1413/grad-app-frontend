@@ -7,7 +7,7 @@ const ResearchDetails = () => {
    
     return ( 
         <>
-            <div className='w-11/12 bg-white mx-auto '>
+            <div className='w-full h-full bg-white mx-auto '>
                 <div className='flex flex-col'>
                     <div className='w-full text-2xl p-5 bg-gray-300'>
                         Project Information

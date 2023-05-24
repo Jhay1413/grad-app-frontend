@@ -21,7 +21,7 @@ const MapComponent = () => {
   const mapboxTileUrl = `https://api.mapbox.com/styles/v1/${mapboxStyle}/tiles/{z}/{x}/{y}?access_token=${mapboxAccessToken}`;
     return ( 
         <>
-
+            <div className=' h-screen w-full'>
                 <MapContainer center={position} zoom={15} >
                     <TileLayer
                         attribution='&copy; <a href="https://www.mapbox.com/feedback/">Mapbox</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -33,6 +33,8 @@ const MapComponent = () => {
                         </Marker>
                     ))}
                 </MapContainer>          
+            </div>
+               
            
         </>
      );
