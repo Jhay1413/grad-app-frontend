@@ -4,7 +4,6 @@ import { addCategory } from "../../../../../api/category";
 import { updateCategory } from "../../../../../api/category";
 
 const AddCategoryModal = ({isModalOpen,currentData,setCurrentData,handleCancel,dataChange,setDataChange}) => {
-   
     const[category,setCategory] = useState({
         categoryName: ''
     });
@@ -12,7 +11,6 @@ const AddCategoryModal = ({isModalOpen,currentData,setCurrentData,handleCancel,d
     useEffect(()=>{
         if(currentData){
             setCategory(currentData);
-            console.log("asdas123");
            
         }
         else{

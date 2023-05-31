@@ -12,7 +12,7 @@ export const getAllSubCategory = async() =>{
 }
 export const addSubCategory  = async (data) =>{
     try {
-        const response = await axios.post(`${SubCategory_API}/insertSubCategory`,data);
+        const response = await axios.post(`${SubCategory_API}/insertSubCategory`,{name:data});
         return response
     } catch (error) {
         console.error('Error on Updating the Data !', error);
@@ -29,6 +29,14 @@ export const deleteSpecificSubCategory = async(id) =>{
 export const updateSubCategory = async (id,data)=>{
     try {
         const response = await axios.put(`${SubCategory_API}/updateSubCategory/${id}`,data);
+        return response;
+    } catch (error) {
+        console.error('Error on Updating the data', error);
+    }
+}
+export const putCategory = async (id,data) =>{
+    try {
+        const response = await axios.put(`${SubCategory_API}/addingCategory/${id}`,data)
         return response;
     } catch (error) {
         console.error('Error on Updating the data', error);

@@ -7,6 +7,7 @@ import { getResearch } from '../../../../api/research';
 import { deleteSpecificResearch } from '../../../../api/research';       
 import WarningModal from '../../admin-modals/warning';
 import {toast,ToastContainer} from 'react-toastify';
+import { getAllSubCategory } from '../../../../api/subCategory';
 
 
 const ResearchPage = () => {
@@ -18,6 +19,7 @@ const ResearchPage = () => {
     const [dataChange,setDataChange] = useState(false);
     const [expandedKey, setExpandedKey] = useState(null);
     const [searchedData,setSearchData] = useState("");
+    const [subCategory,setSubCategory] = useState([]);
 
     useEffect(()=>{
       async function getAllResearch() {
@@ -32,6 +34,18 @@ const ResearchPage = () => {
     }
       getAllResearch();
     }, [dataChange]);
+    useEffect(()=>{
+      async function getAllSubCategories(){
+        try {
+          const data = await getAllSubCategory();
+          setSubCategory(data.data);
+        } catch (error) {
+          console.log(error);
+        }
+
+      }
+      getAllSubCategories();
+    },[])
     const showToast = (status,message) =>{
       toast[status](message);
     }
@@ -216,7 +230,7 @@ const ResearchPage = () => {
                   dataSource = {listResearch.map(research=>({...research,key:research._id}))} 
                   scroll={{ x: 'max-content',}}
                   expandedRowRender = {expandedRowRender}/>
-                <AddResearch isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} updateData={updateData} setUpdateData={setUpdateData} handleCancel={handleCancel} dataChange={dataChange} setDataChange={setDataChange} showToast={showToast}/>
+                <AddResearch isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} updateData={updateData} setUpdateData={setUpdateData} handleCancel={handleCancel} dataChange={dataChange} setDataChange={setDataChange} showToast={showToast} subCategory={subCategory}/>
                 <WarningModal isDeleteModalOpen={isDeleteModalOpen} setIsDeleteModalOpen={setIsDeleteModalOpen} dataChange={dataChange} setDataChange={setDataChange} recordToDelete= {recordToDelete} showToast ={showToast}/>
                  
             </div>

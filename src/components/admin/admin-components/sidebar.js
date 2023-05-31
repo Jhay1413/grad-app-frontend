@@ -47,7 +47,7 @@ const AdminSidebar = ({showSidebar}) => {
                                         {isDropdownVisible && (
                                             <div className=" left-0 mt-2 w-48 rounded-md shadow-lg">
                                             <Link to="/admin/category" className="block px-4 py-2 hover:text-lg">Main Category</Link>
-                                            <Link to="/admin/sub-category" className="block px-4 py-2 hover:text-lg">Sub Category</Link>
+                                            <Link to="/admin/subCategory" className="block px-4 py-2 hover:text-lg">Sub Category</Link>
                                             </div>
                                         )}
                                     </div>

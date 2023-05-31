@@ -8,6 +8,7 @@ import ResearchPage from '../admin-pages/research/research';
 import AgencyIndex from '../admin-pages/agency/agency';
 import jwtDecode from 'jwt-decode';
 import CategoryIndexPage from '../admin-pages/category';
+import SubCategoryIndex from '../admin-pages/subCategory';
 
 const AdminLayout = () => {
     const navigate = useNavigate();
@@ -52,7 +53,7 @@ const AdminLayout = () => {
                 <Route  path="/" element={<AdminIndex/>} />
                 <Route  path="/research"  element={<ResearchPage loading={loading} setLoading={setLoading}/>} />
                 <Route  path="/category"  element={<CategoryIndexPage />} />
-                <Route  path="/agency"  element={<AgencyIndex loading={loading} setLoading={setLoading}/>} />
+                <Route  path="/subCategory"  element={<SubCategoryIndex loading={loading} setLoading={setLoading}/>} />
             </Routes>
         
           </div>

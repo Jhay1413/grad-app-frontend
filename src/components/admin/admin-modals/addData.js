@@ -4,7 +4,7 @@ import {Modal
   import { addResearch,UpdateResearch } from '../../../api/research';
 import LoadingComponent from '../../common/loading/loading';
 
-const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdateData,dataChange,setDataChange,handleCancel,showToast}) => {
+const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdateData,dataChange,setDataChange,handleCancel,showToast,subCategory}) => {
   const [loading,setLoading] = useState(false);
   const inputStyle = "appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
   const renderInput = (type,name,value,placeholder = null )=>(
@@ -25,6 +25,20 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdateData,dataCh
       onChange={handleInputChange}
       placeholder={placeholder || name}
     />
+  );
+  const renderSelect = (name,value)=>(
+    <select 
+      className={inputStyle}
+      name={name}
+      value={value? value : ''}
+      onChange={handleInputChange}
+
+    >
+    {subCategory.map(sub => (
+      <option key = {sub._id} value={sub._id}>{sub.name}</option>
+    ))}
+
+    </select>
   )
 
   const [formValues, setFormValues] = useState({
@@ -37,7 +51,7 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdateData,dataCh
       Cite: '',
       NoOfUtilModel: '',
       Adviser: '',
-      Dissertation: '',
+      SubCategory: '',
       Remarks: '',
       Details:{
         published: 'No',
@@ -63,7 +77,6 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdateData,dataCh
           Cite: '',
           NoOfUtilModel: '',
           Adviser: '',
-          Dissertation: '',
           Remarks: '',
           Details:{
             published: 'No',
@@ -71,6 +84,7 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdateData,dataCh
             yearCompleted: '',
             agency: '',
             region: '',
+            SubCategory: '',
         }
       })
     }
@@ -142,7 +156,7 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdateData,dataCh
           Cite: '',
           NoOfUtilModel: '',
           Adviser: '',
-          Dissertation: '',
+         
           Remarks: '',
           Details:{
             published: 'No',
@@ -150,6 +164,7 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdateData,dataCh
             yearCompleted: '',
             agency: '',
             region: '',
+            SubCategory: '',
         }
       })
       setUpdateData(null);
@@ -183,17 +198,7 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdateData,dataCh
                         />
                         <span className="ml-2 text-lg">Published</span>                   
                       </label>
-                      <label htmlFor="option1" className="flex items-center col-span-4 ">                     
-                        <input
-                          type="checkbox"
-                          id="booleanValue"
-                          name="Dissertation"
-                          checked={formValues.Dissertation === 'Yes'}
-                          onChange={handleInputChange}
-                          className="form-checkbox text-blue-500 h-5 w-5"
-                        />
-                        <span className="ml-2 text-lg">Dissertations</span>                   
-                      </label>
+                      
                     </div>
                     <label className='col-span-2'>
                       Research Name:                     
@@ -214,6 +219,10 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdateData,dataCh
                     <label className='col-span-2'>
                       FundSource:
                       {renderInput("text","FundSource",formValues.FundSource)}
+                    </label>
+                    <label className='col-span-2'>
+                      SubCategory:
+                      {renderSelect("SubCategory",formValues.SubCategory)}
                     </label>
                     <label className='col-span-1'>
                       No. of Patents:
