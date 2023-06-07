@@ -51,7 +51,6 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdateData,dataCh
       Cite: '',
       NoOfUtilModel: '',
       Adviser: '',
-      SubCategory: '',
       Remarks: '',
       Details:{
         published: 'No',
@@ -59,6 +58,7 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdateData,dataCh
         yearCompleted: '',
         agency: '',
         region: '',
+        subCategory: ''
     }
   });
   useEffect(()=>{
@@ -84,7 +84,7 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdateData,dataCh
             yearCompleted: '',
             agency: '',
             region: '',
-            SubCategory: '',
+            subCategory: '',
         }
       })
     }
@@ -156,7 +156,6 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdateData,dataCh
           Cite: '',
           NoOfUtilModel: '',
           Adviser: '',
-         
           Remarks: '',
           Details:{
             published: 'No',
@@ -164,7 +163,7 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdateData,dataCh
             yearCompleted: '',
             agency: '',
             region: '',
-            SubCategory: '',
+            subCategory: '',
         }
       })
       setUpdateData(null);
@@ -192,7 +191,7 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdateData,dataCh
                           type="checkbox"
                           id="booleanValue"
                           name="Details.published"
-                          checked={formValues.Details.published === 'Yes'}
+                          checked={formValues.Details.published === 'Yes' || !formValues.Details.published || !formValues.Details}
                           onChange={handleInputChange}
                           className="form-checkbox text-blue-500 h-5 w-5"
                         />
@@ -202,63 +201,63 @@ const AddResearch = ({isModalOpen,setIsModalOpen,updateData,setUpdateData,dataCh
                     </div>
                     <label className='col-span-2'>
                       Research Name:                     
-                      {renderInput("text","ResearchName",formValues.ResearchName)}
+                      {renderInput("text","ResearchName",formValues.ResearchName || '')}
                     </label>
                     <label className='col-span-2'>
                       Beneficiaries:
-                      {renderInput("text","Beneficiaries",formValues.Beneficiaries)}
+                      {renderInput("text","Beneficiaries",formValues.Beneficiaries || '')}
                     </label>
                     <label className='col-span-2'>
                       Proponents:
-                      {renderInput("text","Proponents",formValues.Proponents)}
+                      {renderInput("text","Proponents",formValues.Proponents || '')}
                     </label>
                     <label className='col-span-2'>
                       Adviser
-                      {renderInput("text","Adviser",formValues.Adviser)}
+                      {renderInput("text","Adviser",formValues.Adviser || '')}
                     </label>
                     <label className='col-span-2'>
                       FundSource:
-                      {renderInput("text","FundSource",formValues.FundSource)}
+                      {renderInput("text","FundSource",formValues.FundSource || '')}
                     </label>
                     <label className='col-span-2'>
                       SubCategory:
-                      {renderSelect("SubCategory",formValues.SubCategory)}
+                      {renderSelect("Details.subCategory",formValues.Details.subCategory || '')}
                     </label>
                     <label className='col-span-1'>
                       No. of Patents:
-                      {renderInput("number","NoOfPatents",formValues.NoOfPatents)}
+                      {renderInput("number","NoOfPatents",formValues.NoOfPatents || '')}
                     </label>
                     <label className='col-span-1 text-sm'>
                       No. of Util Model
-                      {renderInput("number","NoOfUtilModel",formValues.NoOfUtilModel)}
+                      {renderInput("number","NoOfUtilModel",formValues.NoOfUtilModel || '')}
                     </label>
                     <label className='col-span-1'>
                       Year Started:
-                      {renderInput("number","Details.yearStarted",formValues.Details.yearStarted,"Year Started")}  
+                      {renderInput("number","Details.yearStarted",formValues.Details.yearStarted || '',"Year Started")}  
                     </label>
                     <label className='col-span-1'>
                       Year Completed:
-                      {renderInput("number","Details.yearCompleted",formValues.Details.yearCompleted,"Year Completed")} 
+                      {renderInput("number","Details.yearCompleted",formValues.Details.yearCompleted || '',"Year Completed")} 
                     </label>
                     <label className='col-span-1'>
                       Region
-                      {renderInput("number","Details.region",formValues.Details.region,"Region")} 
+                      {renderInput("number","Details.region",formValues.Details.region || '',"Region")} 
                     </label>
                     <label className='col-span-1'>
                       Agency:
-                      {renderInput("text","Details.agency",formValues.Details.agency,"Agency")} 
+                      {renderInput("text","Details.agency",formValues.Details.agency || '',"Agency")} 
                     </label>
                     <label className='col-span-4'>
                       How to Cite
-                      {renderInput("text","Cite",formValues.Cite)}
+                      {renderInput("text","Cite",formValues.Cite || '')}
                     </label>
                     <label className='col-span-4 row-span-2'>
                       Remarks:
-                      {renderInput("text","Remarks",formValues.Remarks)}
+                      {renderInput("text","Remarks",formValues.Remarks || '')}
                     </label>
                     <label className='col-span-4'>
                       Abstarct:
-                      {renderTextArea("Abstract",formValues.Abstract)}
+                      {renderTextArea("Abstract",formValues.Abstract || '')}
                     </label>
                   
                    

@@ -6,10 +6,7 @@ export const getResearch = async () => {
     try {
       const response = await axios.get(`${Research_API}/getResearch`);
      
-      return {
-        status: response.status,
-        data: response.data
-      };
+      return response;
     } catch (error) {
       console.error('Error on Fetching the Data',error);
   

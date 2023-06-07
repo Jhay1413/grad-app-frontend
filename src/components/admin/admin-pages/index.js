@@ -1,7 +1,7 @@
 const AdminIndex = () => {
     return ( 
         <>
-      
+      asdsa
         </>
      );
 }

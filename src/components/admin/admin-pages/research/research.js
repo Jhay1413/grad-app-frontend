@@ -74,6 +74,17 @@ const ResearchPage = () => {
           dataIndex: 'agency',
           key: 'agency'
         },
+       
+        {
+          /*use this after all the data has subcategory
+          title: 'SubCategory',
+          dataIndex: 'subCategory', // Update dataIndex to 'subCategory'
+          key: 'subCategory', // Update key to 'subCategory'
+          render: (subCategory) => (subCategory ? subCategory.name : 'No subcategory') // Use render function to access subCategory.name*/
+          title:'SubCategory',
+          dataIndex:'subCategory',
+          key:'subCategory'
+        },
         {
           title: 'Region',
           dataIndex: 'region',
